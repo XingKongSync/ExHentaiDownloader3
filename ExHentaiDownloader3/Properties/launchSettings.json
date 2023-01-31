@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ExHentaiDownloader3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ExHentaiDownloader3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
