@@ -1,15 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using ExHentaiDownloader3.Navigation;
-using Microsoft.UI.Xaml.Documents;
-using System;
-using System.Collections.Generic;
+using ExHentaiDownloader3.Views;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace ExHentaiDownloader3.Tabs
+namespace ExHentaiDownloader3.ViewModels
 {
     public class HomeVM : BindableBase
     {
@@ -40,18 +33,12 @@ namespace ExHentaiDownloader3.Tabs
 
         public void DoQuery()
         {
-            NavigationRootPage.Instance.OpenNewPage(new NavigationPageModel()
+            var result = SearchResultViewFactory.Create(SearchText);
+            MainWindow.Instance.VM.NewTab(new TabVM()
             {
-                Title = $"Search: {SearchText}",
                 Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
-                PageType = typeof(SearchResultView),
-                Args = new Parameters.SearchResultNavigateParameter()
-                {
-                    ViewModel = new SearchResultVM()
-                    {
-                        Title = SearchText
-                    }
-                }
+                Title = result.Title,
+                View = result.View
             });
         }
     }

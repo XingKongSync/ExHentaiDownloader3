@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExHentaiDownloader3.Tabs
+namespace ExHentaiDownloader3.ViewModels
 {
     public class SearchResultVM : BindableBase
     {

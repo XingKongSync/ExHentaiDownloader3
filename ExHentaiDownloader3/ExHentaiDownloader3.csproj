@@ -14,9 +14,8 @@
     <DefaultLanguage>zh-cn</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Navigation\NavigationRootPage.xaml" />
-    <None Remove="Tabs\HomeView.xaml" />
-    <None Remove="Tabs\SearchResultView.xaml" />
+    <None Remove="Views\HomeView.xaml" />
+    <None Remove="Views\SearchResultView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,17 +58,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Tabs\SearchResultView.xaml">
+    <Page Update="Views\SearchResultView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Tabs\HomeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Navigation\NavigationRootPage.xaml">
+    <Page Update="Views\HomeView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -1,7 +1,3 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
-using ExHentaiDownloader3.Navigation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -36,13 +32,19 @@ namespace ExHentaiDownloader3
         Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController m_acrylicController;
         Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration m_configurationSource;
 
+        public static MainWindow Instance { get; private set; }
+
+        public MainWindowVM VM { get => ViewModel; }
+
         public MainWindow()
         {
             this.InitializeComponent();
-            NavigationRootPage rootPage = new NavigationRootPage();
-            Content = rootPage;
-            rootPage.MainWindow = this;
 
+            Instance = this;
+
+            Title = ViewModel.AppTitleText;
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(AppTitleBar);
         }
 
         public bool TrySetAcrylicBackdrop()
