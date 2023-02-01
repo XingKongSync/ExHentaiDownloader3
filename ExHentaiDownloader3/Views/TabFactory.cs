@@ -25,17 +25,14 @@ namespace ExHentaiDownloader3.Views
         {
             searchText = $"Search: {searchText}";
 
-            SearchResultVM vm = new SearchResultVM() { Title = searchText };
-
             TabVM tabVM = new TabVM
             {
                 Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
-                Title = searchText,
-                View = new SearchResultView()
-                {
-                    ViewModel = vm
-                },
+                Title = searchText
             };
+            SearchResultVM vm = new SearchResultVM(tabVM) { Title = searchText };
+            tabVM.View = new SearchResultView() { ViewModel = vm };
+
             tabVM.CloseCommand = new RelayCommand(() => MainWindow.Instance.VM.CloseTab(tabVM));
 
             return tabVM;
@@ -48,6 +45,27 @@ namespace ExHentaiDownloader3.Views
                 Icon = Symbol.Setting,
                 Title = "Setting",
                 View = new SettingsView()
+            };
+        }
+
+        public static TabVM CreateBookTab(BookInfoVM info, TabVM parent)
+        {
+            return new TabVM()
+            {
+                Icon = Symbol.BrowsePhotos,
+                Title = info.Title,
+                Parent = parent,
+                View = new BookView() { ViewModel = new BookVM() { BookInfo = info } }
+            };
+        }
+
+        public static TabVM CreateLibraryTab()
+        {
+            return new TabVM()
+            {
+                Icon = Symbol.Library,
+                Title = "Library",
+                View = new LibraryView()
             };
         }
     }

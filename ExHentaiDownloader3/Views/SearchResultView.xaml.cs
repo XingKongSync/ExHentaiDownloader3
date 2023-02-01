@@ -17,7 +17,7 @@ namespace ExHentaiDownloader3.Views
         private void Border_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             var pointer = e.Pointer;
-            if (pointer.PointerDeviceType == Microsoft.UI.Input.PointerDeviceType.Mouse && e.GetCurrentPoint(sender as UIElement).Properties.IsRightButtonPressed)
+            if (pointer.PointerDeviceType == Microsoft.UI.Input.PointerDeviceType.Mouse && e.GetCurrentPoint(sender as UIElement).Properties.PointerUpdateKind == Microsoft.UI.Input.PointerUpdateKind.RightButtonReleased)
             {
                 return;
             }

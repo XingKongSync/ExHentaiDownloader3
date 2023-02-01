@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Views;
+using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -28,14 +31,41 @@ namespace ExHentaiDownloader3.ViewModels
         public string NextUrl { get => _nextUrl; set => SetProperty(ref _nextUrl, value); }
         public ObservableCollection<BookInfoVM> Books { get => _books; set => SetProperty(ref _books, value); }
         public BookInfoVM SelectedBook { get => _selectedBook; set => SetProperty(ref _selectedBook, value); }
+        public RelayCommand<BookInfoVM> OpenBookCommand { get; private set; }
+        public RelayCommand<BookInfoVM> OpenBookInBackgroundCommand { get; private set; }
+        
+        public TabVM MyTab { get; private set; }
 
-        public SearchResultVM()
+        public SearchResultVM(TabVM tabVM)
         {
+            MyTab = tabVM;
+            OpenBookCommand = new RelayCommand<BookInfoVM>(OpenBookCommandHandler);
+            OpenBookInBackgroundCommand = new RelayCommand<BookInfoVM>(OpenBookInBackgroundCommandHandler);
+
             Books = new ObservableCollection<BookInfoVM>();
             for (int i = 0; i < 100; i++)
             {
                 Books.Add(new BookInfoVM());
             }
+        }
+
+        private void OpenBookCommandHandler(BookInfoVM info)
+        {
+            var bookVM = TabFactory.CreateBookTab(info, MyTab);
+            MyTab.Children.Add(bookVM);
+
+            MyTab.IsExpanded = true;
+            MainWindow.Instance.VM.SelectedTab = bookVM;
+        }
+
+        private void OpenBookInBackgroundCommandHandler(BookInfoVM info)
+        {
+            var bookVM = TabFactory.CreateBookTab(info, MyTab);
+            if (MyTab.Children is null)
+            {
+                MyTab.Children = new ObservableCollection<TabVM>();
+            }
+            MyTab.Children.Add(bookVM);
         }
     }
 }

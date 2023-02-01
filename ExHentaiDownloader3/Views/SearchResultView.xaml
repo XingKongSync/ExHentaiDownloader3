@@ -11,7 +11,8 @@
     mc:Ignorable="d"
     xmlns:ctl="using:ExHentaiDownloader3.Controls"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
-    d:DataContext="{d:DesignInstance Type=vm:SearchResultVM}">
+    d:DataContext="{d:DesignInstance Type=vm:SearchResultVM}"
+    x:Name="self">
     <UserControl.Resources>
         <Style x:Key="MyContentDialogStyle" TargetType="ContentDialog">
             <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
@@ -272,6 +273,7 @@
             Margin="30 0 0 0"/>
         <!--Book List-->
         <ListBox Grid.Row="1"
+                 x:Name="lbBookList"
                  Margin="0 10 0 0"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
                  ItemsSource="{Binding Books}" 
@@ -289,7 +291,7 @@
                         <!--Item Context Menu-->
                         <Border.ContextFlyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Text="Open In Background"/>
+                                <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
                                 <MenuFlyoutItem Text="Download"/>
                             </MenuFlyout>
                         </Border.ContextFlyout>
@@ -316,7 +318,11 @@
                        CloseButtonText="Close"
                        SecondaryButtonText="Open In Background"
                        Style="{StaticResource MyContentDialogStyle}"
-                       DefaultButton="Primary">
+                       DefaultButton="Primary"
+                       PrimaryButtonCommand="{Binding OpenBookCommand}"
+                       PrimaryButtonCommandParameter="{Binding SelectedBook}"
+                       SecondaryButtonCommand="{Binding OpenBookInBackgroundCommand}"
+                       SecondaryButtonCommandParameter="{Binding SelectedBook}">
             <Grid Width="650">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>

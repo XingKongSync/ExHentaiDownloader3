@@ -64,7 +64,7 @@
             IsBackEnabled="False">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="vm:TabVM">
-                    <NavigationViewItem Icon="{Binding Icon, Converter={StaticResource IconConverter}}" Content="{Binding Title}" MenuItemsSource="{Binding Children}">
+                    <NavigationViewItem Icon="{Binding Icon, Converter={StaticResource IconConverter}}" Content="{Binding Title}" MenuItemsSource="{Binding Children}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}">
                         <NavigationViewItem.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Close" Command="{Binding CloseCommand}"/>
