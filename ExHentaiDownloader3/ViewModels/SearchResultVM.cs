@@ -17,6 +17,7 @@ namespace ExHentaiDownloader3.ViewModels
         private string _preUrl;
         private string _nextUrl;
         private ObservableCollection<BookInfoVM> _books;
+        private BookInfoVM _selectedBook;
 
         public string Url { get => _url; set => SetProperty(ref _url, value); }
         public string Title { get => _title; set => SetProperty(ref _title, value); }
@@ -26,6 +27,7 @@ namespace ExHentaiDownloader3.ViewModels
         public string PreUrl { get => _preUrl; set => SetProperty(ref _preUrl, value); }
         public string NextUrl { get => _nextUrl; set => SetProperty(ref _nextUrl, value); }
         public ObservableCollection<BookInfoVM> Books { get => _books; set => SetProperty(ref _books, value); }
+        public BookInfoVM SelectedBook { get => _selectedBook; set => SetProperty(ref _selectedBook, value); }
 
         public SearchResultVM()
         {

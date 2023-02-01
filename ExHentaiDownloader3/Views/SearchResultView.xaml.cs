@@ -14,14 +14,14 @@ namespace ExHentaiDownloader3.Views
             this.InitializeComponent();
         }
 
-        private async void Border_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void Border_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             var pointer = e.Pointer;
             if (pointer.PointerDeviceType == Microsoft.UI.Input.PointerDeviceType.Mouse && e.GetCurrentPoint(sender as UIElement).Properties.IsRightButtonPressed)
             {
                 return;
             }
-            await termsOfUseContentDialog.ShowAsync();
+            DispatcherQueue.TryEnqueue(() => _ = termsOfUseContentDialog.ShowAsync());
         }
     }
 }

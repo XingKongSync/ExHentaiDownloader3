@@ -261,7 +261,7 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid Margin="0 30 0 0">
+    <Grid Margin="0 40 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -269,10 +269,14 @@
         <TextBlock 
             Text="{Binding Title}" 
             Style="{ThemeResource TitleTextBlockStyle}"
-            Margin="50 0 0 0"/>
+            Margin="30 0 0 0"/>
         <!--Book List-->
         <ListBox Grid.Row="1"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" ItemsSource="{Binding Books}" Background="Transparent">
+                 Margin="0 10 0 0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
+                 ItemsSource="{Binding Books}" 
+                 SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                 Background="Transparent">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
@@ -281,14 +285,21 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <!--Book Item-->
-                    <Border Background="#20000000" Width="300" Height="300" CornerRadius="8" PointerPressed="Border_PointerPressed">
+                    <Border Background="#20000000" Width="150" Height="200" CornerRadius="8" PointerReleased="Border_PointerReleased">
+                        <!--Item Context Menu-->
                         <Border.ContextFlyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Text="By rating"/>
-                                <MenuFlyoutItem Text="By match"/>
-                                <MenuFlyoutItem Text="By distance"/>
+                                <MenuFlyoutItem Text="Open In Background"/>
+                                <MenuFlyoutItem Text="Download"/>
                             </MenuFlyout>
                         </Border.ContextFlyout>
+                        <Grid>
+                            <!--Image-->
+                            <!--Info-->
+                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#20000000">
+                                <TextBlock Text="{Binding Title}" Margin="5" TextWrapping="Wrap"/>
+                            </Border>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -306,15 +317,7 @@
                        SecondaryButtonText="Open In Background"
                        Style="{StaticResource MyContentDialogStyle}"
                        DefaultButton="Primary">
-            <!--<ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="ms-appx:///Assets/SmallLogo.png" Width="40" Height="40" Margin="10,0"/>
-                        <TextBlock Text="Terms of use"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>-->
-            <Grid Width="900">
+            <Grid Width="650">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
@@ -322,7 +325,26 @@
                 <Border Background="#20000000" Width="300" Height="300"/>
                 <ScrollViewer Grid.Column="1" Margin="20 0 0 0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Vertical" >
-                        <TextBlock Style="{ThemeResource HeaderTextBlockStyle}" Text="Title"/>
+                        <!--Title-->
+                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding SelectedBook.Title}" TextWrapping="Wrap"/>
+                        <!--PageCount-->
+                        <TextBlock Margin="10 18 0 0">
+                            <Run Text="Page Count:"/>
+                            <Run Text="{Binding SelectedBook.PageCount}"/>
+                        </TextBlock>
+                        <!--Tags-->
+                        <GridView Grid.Row="1" Grid.Column="1" Margin="0 5 0 0" ItemsSource="{Binding SelectedBook.Tags}" SelectionMode="None">
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <HyperlinkButton Content="{Binding}"/>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
