@@ -58,6 +58,8 @@
             IsTitleBarAutoPaddingEnabled="False"
             SelectedItem="{x:Bind ViewModel.SelectedTab, Mode=TwoWay}"
             MenuItemsSource="{x:Bind ViewModel.Tabs}"
+            FooterMenuItemsSource="{x:Bind ViewModel.FooterTabs}"
+            IsSettingsVisible="False"
             IsBackButtonVisible="Collapsed"
             IsBackEnabled="False">
             <NavigationView.MenuItemTemplate>

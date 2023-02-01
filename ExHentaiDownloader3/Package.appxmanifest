@@ -44,5 +44,7 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
+    <uap:Capability Name="removableStorage"/>
   </Capabilities>
 </Package>

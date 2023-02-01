@@ -33,7 +33,7 @@ namespace ExHentaiDownloader3.ViewModels
 
         public void DoQuery()
         {
-            var tab = SearchResultViewFactory.CreateTab(SearchText);
+            var tab = TabFactory.CreateSearchResultTab(SearchText);
             MainWindow.Instance.VM.NewTab(tab);
         }
     }

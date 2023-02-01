@@ -15,6 +15,10 @@
             <!-- Other app resources here -->
             <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
             <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
+            <!--HeaderTabGridStyle-->
+            <Style TargetType="Grid" x:Key="HeaderTabGridStyle">
+                <Setter Property="Margin" Value="0 40 0 0"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Views\HomeView.xaml" />
     <None Remove="Views\SearchResultView.xaml" />
+    <None Remove="Views\SettingsView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +57,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\SearchResultView.xaml">

@@ -16,6 +16,7 @@ namespace ExHentaiDownloader3
 
         public string AppTitleText { get; set; } = "ExhentaiDownloader";
         public ObservableCollection<TabVM> Tabs { get; private set; } = new ObservableCollection<TabVM>();
+        public ObservableCollection<TabVM> FooterTabs { get; private set; } = new ObservableCollection<TabVM>();
         public TabVM SelectedTab { get => _selectedTab; set => SetProperty(ref _selectedTab, value); }
 
         public MainWindowVM() 
@@ -25,7 +26,9 @@ namespace ExHentaiDownloader3
 
         private void InitPages()
         {
-            Tabs.Add(HomeViewFactory.CreateTab());
+            Tabs.Add(TabFactory.CreateHomeTab());
+
+            FooterTabs.Add(TabFactory.CreateSettingsTab());
 
             SelectedTab = Tabs[0];
         }

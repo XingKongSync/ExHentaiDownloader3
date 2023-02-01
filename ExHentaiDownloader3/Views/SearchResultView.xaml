@@ -261,7 +261,7 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid Margin="0 40 0 0">
+    <Grid Style="{StaticResource HeaderTabGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
