@@ -25,7 +25,7 @@ namespace ExHentaiDownloader3
 
         private void InitPages()
         {
-            Tabs.Add(new TabVM() { Icon = Symbol.Home, Title = "Home", View = new HomeView() });
+            Tabs.Add(HomeViewFactory.CreateTab());
 
             SelectedTab = Tabs[0];
         }
@@ -34,6 +34,24 @@ namespace ExHentaiDownloader3
         {
             Tabs.Add(tab);
             SelectedTab = tab;
+        }
+
+        public void CloseTab(TabVM tab)
+        {
+            if (SelectedTab == tab)
+            {
+                int index = Tabs.IndexOf(tab);
+                int temp = index - 1;
+                if (temp >= 0 && temp <= Tabs.Count - 1)
+                {
+                    SelectedTab= Tabs[temp];
+                }
+                else
+                {
+                    SelectedTab= Tabs[0];
+                }
+            }
+            Tabs.Remove(tab);
         }
     }
 }

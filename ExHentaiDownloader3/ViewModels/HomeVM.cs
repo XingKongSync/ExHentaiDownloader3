@@ -33,13 +33,8 @@ namespace ExHentaiDownloader3.ViewModels
 
         public void DoQuery()
         {
-            var result = SearchResultViewFactory.Create(SearchText);
-            MainWindow.Instance.VM.NewTab(new TabVM()
-            {
-                Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
-                Title = result.Title,
-                View = result.View
-            });
+            var tab = SearchResultViewFactory.CreateTab(SearchText);
+            MainWindow.Instance.VM.NewTab(tab);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +10,24 @@ namespace ExHentaiDownloader3.Views
 {
     public static class SearchResultViewFactory
     {
-        public class Result
-        {
-            public string Title { get; set; }
-            public SearchResultView View { get; set; }
-        }
-
-        public static Result Create(string searchText)
+        public static TabVM CreateTab(string searchText)
         {
             searchText = $"Search: {searchText}";
 
-            return new Result { Title = searchText, View = new SearchResultView() { DataContext = new ViewModels.SearchResultVM() { Title = searchText } } };
+            SearchResultVM vm = new SearchResultVM() { Title = searchText };
+
+            TabVM tabVM = new TabVM
+            {
+                Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
+                Title = searchText, 
+                View = new SearchResultView() 
+                { 
+                    ViewModel = vm
+                },
+            };
+            tabVM.CloseCommand = new RelayCommand(()=> MainWindow.Instance.VM.CloseTab(tabVM));
+
+            return tabVM;
         }
     }
 
