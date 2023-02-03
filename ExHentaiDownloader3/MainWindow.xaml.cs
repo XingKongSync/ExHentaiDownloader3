@@ -38,9 +38,9 @@ namespace ExHentaiDownloader3
 
         public MainWindow()
         {
-            this.InitializeComponent();
-
             Instance = this;
+
+            this.InitializeComponent();
 
             Title = ViewModel.AppTitleText;
             ExtendsContentIntoTitleBar = true;

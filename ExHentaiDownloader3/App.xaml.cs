@@ -36,6 +36,7 @@ namespace ExHentaiDownloader3
         public App()
         {
             this.InitializeComponent();
+            FocusVisualKind = FocusVisualKind.Reveal;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Core;
 using ExHentaiDownloader3.Views;
 using System.Collections.ObjectModel;
 
@@ -7,21 +8,19 @@ namespace ExHentaiDownloader3.ViewModels
     public class HomeVM : BindableBase
     {
         private string _searchText = string.Empty;
-        private ObservableCollection<string> _historySearchItems = new ObservableCollection<string>();
 
         public string SearchText { get => _searchText; set => SetProperty(ref _searchText, value); }
-        public ObservableCollection<string> HistorySearchItems { get => _historySearchItems; set => SetProperty(ref _historySearchItems, value); }
+        public ObservableCollection<string> HistorySearchItems { get => HistoryManager.Instance.History; }
 
         public RelayCommand<string> HistroyItemQueryCommand { get; private set; }
+        public RelayCommand QueryCommand { get; private set; }
+        public RelayCommand ClearCommand { get; private set; }
 
         public HomeVM()
         {
-            for (int i = 0; i < 10; i++)
-            {
-                _historySearchItems.Add($"item{i}");
-            }
-
             HistroyItemQueryCommand = new RelayCommand<string>(HistroyItemQueryCommandHandler);
+            QueryCommand = new RelayCommand(DoQuery);
+            ClearCommand = new RelayCommand(ClearCommandHandler);
         }
 
         private void HistroyItemQueryCommandHandler(string queryText)
@@ -35,6 +34,15 @@ namespace ExHentaiDownloader3.ViewModels
         {
             var tab = TabFactory.CreateSearchResultTab(SearchText);
             MainWindow.Instance.VM.NewTab(tab);
+
+            HistoryManager.Instance.AddItem(SearchText);
+
+            SearchText = string.Empty;
+        }
+
+        private void ClearCommandHandler()
+        {
+            HistoryManager.Instance.Clear();
         }
     }
 }
