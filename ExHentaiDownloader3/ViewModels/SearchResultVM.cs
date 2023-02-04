@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Core.Exhentai;
 using ExHentaiDownloader3.Views;
 using Microsoft.UI.Dispatching;
 using System;
@@ -22,6 +23,9 @@ namespace ExHentaiDownloader3.ViewModels
         private ObservableCollection<BookInfoVM> _books;
         private BookInfoVM _selectedBook;
 
+        private bool _isLoading = false;
+        private SearchResultPage _loader = new SearchResultPage();
+
         public string Url { get => _url; set => SetProperty(ref _url, value); }
         public string Title { get => _title; set => SetProperty(ref _title, value); }
         public int Count { get => _count; set => SetProperty(ref _count, value); }
@@ -34,6 +38,8 @@ namespace ExHentaiDownloader3.ViewModels
         public RelayCommand<BookInfoVM> OpenBookCommand { get; private set; }
         public RelayCommand<BookInfoVM> OpenBookInBackgroundCommand { get; private set; }
         
+        public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
+        
         public TabVM MyTab { get; private set; }
 
         public SearchResultVM(TabVM tabVM)
@@ -42,11 +48,7 @@ namespace ExHentaiDownloader3.ViewModels
             OpenBookCommand = new RelayCommand<BookInfoVM>(OpenBookCommandHandler);
             OpenBookInBackgroundCommand = new RelayCommand<BookInfoVM>(OpenBookInBackgroundCommandHandler);
 
-            Books = new ObservableCollection<BookInfoVM>();
-            for (int i = 0; i < 100; i++)
-            {
-                Books.Add(new BookInfoVM());
-            }
+            DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
         }
 
         private void OpenBookCommandHandler(BookInfoVM info)
@@ -66,6 +68,29 @@ namespace ExHentaiDownloader3.ViewModels
                 MyTab.Children = new ObservableCollection<TabVM>();
             }
             MyTab.Children.Add(bookVM);
+        }
+
+        private async void Load()
+        {
+            IsLoading = true;
+
+            try
+            {
+                await _loader.LoadPage(Url);
+
+                Count = _loader.Count;
+                FirstUrl = _loader.FirstUrl;
+                LastUrl = _loader.LastUrl;
+                PreUrl = _loader.PreUrl;
+                NextUrl = _loader.NextUrl;
+                Books = new ObservableCollection<BookInfoVM>(_loader.BookInfos);
+            }
+            catch (Exception ex)
+            {
+                _ = MainWindow.Instance.ShowMessage("Error", ex.Message);
+            }
+
+            IsLoading = false;
         }
     }
 }

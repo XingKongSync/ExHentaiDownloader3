@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net;
 
 namespace ExHentaiDownloader3.Core
 {
@@ -64,15 +65,47 @@ namespace ExHentaiDownloader3.Core
 
     public class ConfigEnitty : BindableBase, IConfig
     {
+        private CookieCollection _cookieCollection;
         private string _cookies = string.Empty;
         private bool _enableSound;
         private string _downloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ExHentaiDownloader3\Library");
         private ObservableCollection<string> _history = new ObservableCollection<string>();
 
-        public string Cookies { get => _cookies; set => SetProperty(ref _cookies, value); }
+        public string Cookies 
+        {
+            get => _cookies;
+            set
+            {
+                if (SetProperty(ref _cookies, value))
+                {
+                    _cookieCollection = null;
+                }
+            }
+        }
         public bool EnableSound { get => _enableSound; set => SetProperty(ref _enableSound, value); }
         public string LibraryFolder { get => _downloadFolder; set => SetProperty(ref _downloadFolder, value); }
         public ObservableCollection<string> History { get => _history; set => SetProperty(ref _history, value); }
+
+        [JsonIgnore]
+        public CookieCollection CookieCollection 
+        {
+            get
+            {
+                if (_cookieCollection == null && !string.IsNullOrEmpty(_cookies))
+                {
+                    try
+                    {
+                        CookieEntity[] cookieItems = JsonConvert.DeserializeObject<CookieEntity[]>(_cookies);
+                        _cookieCollection = CookieEntity.GetCookieCollection(cookieItems);
+                        return _cookieCollection;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                return _cookieCollection;
+            }
+        }
     }
 
     public interface IConfig

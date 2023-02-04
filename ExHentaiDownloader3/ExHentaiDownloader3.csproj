@@ -11,7 +11,7 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <UseWPF>False</UseWPF>
-    <DefaultLanguage>zh-cn</DefaultLanguage>
+    <DefaultLanguage>en-us</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\BookView.xaml" />

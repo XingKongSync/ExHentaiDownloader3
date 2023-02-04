@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExHentaiDownloader3.Converters
 {
-    public class EqualToVisibilityConverter : IValueConverter
+    public class UnequalToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Helpers;
 using ExHentaiDownloader3.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -23,14 +24,29 @@ namespace ExHentaiDownloader3.Views
 
         public static TabVM CreateSearchResultTab(string searchText)
         {
-            searchText = $"Search: {searchText}";
+            string url;
+            string title;
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                url = UrlHelper.CONST_EXHENTAI_ROOT;
+                title = "Latest Content";
+            }
+            else
+            {
+                url = string.Format(UrlHelper.CONST_EXHENTAI_SEARCH, Uri.EscapeDataString(searchText));
+                title = $"Search: {searchText}";
+            }
 
             TabVM tabVM = new TabVM
             {
                 Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
-                Title = searchText
+                Title = title
             };
-            SearchResultVM vm = new SearchResultVM(tabVM) { Title = searchText };
+            SearchResultVM vm = new SearchResultVM(tabVM) 
+            {
+                Title = title,
+                Url = url
+            };
             tabVM.View = new SearchResultView() { ViewModel = vm };
 
             tabVM.CloseCommand = new RelayCommand(() => MainWindow.Instance.VM.CloseTab(tabVM));

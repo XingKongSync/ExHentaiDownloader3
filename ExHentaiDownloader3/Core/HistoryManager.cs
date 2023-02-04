@@ -19,6 +19,9 @@ namespace ExHentaiDownloader3.Core
 
         public void AddItem(string item)
         {
+            if (string.IsNullOrWhiteSpace(item))
+                return;
+
             History.Insert(0, item);
             if (History.Count > 20)
             {

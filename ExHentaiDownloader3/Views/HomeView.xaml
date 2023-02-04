@@ -14,7 +14,7 @@
     xmlns:cvt="using:ExHentaiDownloader3.Converters"
     d:DataContext="{d:DesignInstance Type=vm:HomeVM}">
     <UserControl.Resources>
-        <cvt:EqualToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
+        <cvt:UnequalToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid>

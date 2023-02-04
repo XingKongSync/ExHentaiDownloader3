@@ -15,6 +15,7 @@ using Windows.Foundation.Collections;
 using System.Runtime.InteropServices; // For DllImport
 using WinRT; // required to support Window.As<ICompositionSupportsSystemBackdrop>()
 using ExHentaiDownloader3.Helpers;
+using System.Threading.Tasks;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -45,6 +46,49 @@ namespace ExHentaiDownloader3
             Title = ViewModel.AppTitleText;
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
+
+            InitWindowSize();
+
+            App.Current.UnhandledException += Current_UnhandledException;
+        }
+
+        private void InitWindowSize()
+        {
+            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            appWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 1600, Height = 900 });
+
+            CenterToScreen(hWnd);
+        }
+
+        private void CenterToScreen(IntPtr hWnd)
+        {
+            Microsoft.UI.WindowId windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+            Microsoft.UI.Windowing.AppWindow appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            if (appWindow is not null)
+            {
+                Microsoft.UI.Windowing.DisplayArea displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(windowId, Microsoft.UI.Windowing.DisplayAreaFallback.Nearest);
+                if (displayArea is not null)
+                {
+                    var CenteredPosition = appWindow.Position;
+                    CenteredPosition.X = ((displayArea.WorkArea.Width - appWindow.Size.Width) / 2);
+                    CenteredPosition.Y = ((displayArea.WorkArea.Height - appWindow.Size.Height) / 2);
+                    appWindow.Move(CenteredPosition);
+                }
+            }
+        }
+
+        private void Current_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            _ = ShowMessage("Error", e.Message);
+        }
+
+        public async Task<ContentDialogResult> ShowMessage(string title, string content)
+        {
+            CommonMessageDialog.Title = title;
+            CommonMessageDialog.Content = content;
+            return await CommonMessageDialog.ShowAsync();
         }
 
         public bool TrySetAcrylicBackdrop()

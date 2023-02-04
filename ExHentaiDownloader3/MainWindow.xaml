@@ -76,5 +76,14 @@
 
             <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{x:Bind ViewModel.SelectedTab.View,Mode=TwoWay}"/>
         </NavigationView>
+
+        <!--Common Message Dialog-->
+        <ContentDialog x:Name="CommonMessageDialog" 
+                       IsPrimaryButtonEnabled="False"
+                       IsSecondaryButtonEnabled="False"
+                       CloseButtonText="OK"
+                       Style="{StaticResource MyContentDialogStyle}"
+                       DefaultButton="Close">
+        </ContentDialog>
     </Grid>
 </Window>
