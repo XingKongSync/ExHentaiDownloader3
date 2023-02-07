@@ -33,6 +33,8 @@ namespace ExHentaiDownloader3
         Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController m_acrylicController;
         Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration m_configurationSource;
 
+        private bool _isDialogShowing = false;
+
         public static MainWindow Instance { get; private set; }
 
         public MainWindowVM VM { get => ViewModel; }
@@ -86,9 +88,23 @@ namespace ExHentaiDownloader3
 
         public async Task<ContentDialogResult> ShowMessage(string title, string content)
         {
-            CommonMessageDialog.Title = title;
-            CommonMessageDialog.Content = content;
-            return await CommonMessageDialog.ShowAsync();
+            if (_isDialogShowing) return ContentDialogResult.None;
+            try
+            {
+                _isDialogShowing = true;
+
+                CommonMessageDialog.Title = title;
+                CommonMessageDialog.Content = content;
+                return await CommonMessageDialog.ShowAsync();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                _isDialogShowing= false;
+            }
+            return ContentDialogResult.None;
         }
 
         public bool TrySetAcrylicBackdrop()

@@ -21,6 +21,8 @@ namespace ExHentaiDownloader3.Core.Exhentai
         private int _imageCount;
         private CookieCollection _cookies = ConfigManager.Instance.Config.CookieCollection;
 
+
+        public string BookName { get; private set; }
         /// <summary>
         /// https://exhentai.org/g/2457292/4cbc83af05/
         /// </summary>
@@ -29,10 +31,11 @@ namespace ExHentaiDownloader3.Core.Exhentai
         public int PageSize { get => _pageSize; set => _pageSize = value; }
         public int ImageCount { get => _imageCount; set => _imageCount = value; }
 
-        public BookPage(string rootUrl, int imageCount)
+        public BookPage(string rootUrl, int imageCount, string bookName)
         {
             _rootUrl = rootUrl;
             ImageCount = imageCount;
+            BookName = bookName;
         }
 
         public async Task Load(int currentPage)
@@ -62,12 +65,16 @@ namespace ExHentaiDownloader3.Core.Exhentai
         private void LoadBigImageInfo(IHtmlDocument document)
         {
             ImageInfos = new List<BigImageInfoVM>();
-            
+
             var imageInfoDoms = document.QuerySelectorAll(".gdtl");
-            foreach (var dom in imageInfoDoms) 
+            int count = imageInfoDoms.Count();
+            for (int i = 0; i < count; i++)
             {
+                var dom = imageInfoDoms[i];
                 ImageInfos.Add(new BigImageInfoVM()
                 {
+                    Index = i + PageSize * _currentPage,
+                    BookName = BookName,
                     DetailPageUrl = dom.QuerySelector("a").GetAttribute("href"),
                     ThumbUrl = dom.QuerySelector("img").GetAttribute("src")
                 });

@@ -13,9 +13,5 @@ namespace ExHentaiDownloader3.Views
             this.InitializeComponent();
         }
 
-        private void Border_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -59,7 +59,9 @@
                 </GridView.ItemsPanel>
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <HyperlinkButton Content="{Binding}" Command="{Binding ElementName=self, Path=DataContext.HistroyItemQueryCommand}" CommandParameter="{Binding}"/>
+                        <HyperlinkButton MinWidth="100" Command="{Binding ElementName=self, Path=DataContext.HistroyItemQueryCommand}" CommandParameter="{Binding}" ToolTipService.ToolTip="{Binding}">
+                            <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis"/>
+                        </HyperlinkButton>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>

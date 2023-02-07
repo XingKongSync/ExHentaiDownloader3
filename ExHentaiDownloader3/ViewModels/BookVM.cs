@@ -58,6 +58,8 @@ namespace ExHentaiDownloader3.ViewModels
         public RelayCommand PreCommand { get; private set; }
         public RelayCommand NextCommand { get; private set; }
 
+        public RelayCommand ImageBackCommand { get; private set; }
+
         public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
 
         public BookVM(BookInfoVM bookInfo)
@@ -66,6 +68,7 @@ namespace ExHentaiDownloader3.ViewModels
 
             PreCommand = new RelayCommand(PreCommandHandler, () => CurrentPage > 0);
             NextCommand = new RelayCommand(NextCommantHandler, () => CurrentPage < PageCount - 1);
+            ImageBackCommand = new RelayCommand(() => SelectedPage = null);
 
             DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
         }
@@ -92,7 +95,7 @@ namespace ExHentaiDownloader3.ViewModels
 
             try
             {
-                _loader = new BookPage(_bookInfo.Url, _bookInfo.PageCount);
+                _loader = new BookPage(_bookInfo.Url, _bookInfo.PageCount, _bookInfo.Title);
                 await _loader.Load(CurrentPage);
 
                 if (PageCount <= 0)

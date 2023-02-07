@@ -8,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace ExHentaiDownloader3.ViewModels
 {
-    public partial class BigImageInfoVM : BindableBase
+    public class BigImageVM : BindableBase
     {
-        private string _thumbUrl;
-        private string _detailPageUrl;
+        private string _imageUrl;
 
         private bool _isLoadingThumb = false;
-        private BitmapImage _thumbSource;
+        private BitmapImage _iamgeSource;
         private bool _loadFailed = false;
 
-        public string ThumbUrl { get => _thumbUrl; set => SetProperty(ref _thumbUrl, value); }
-        public string DetailPageUrl { get => _detailPageUrl; set => SetProperty(ref _detailPageUrl, value); }
-        public bool LoadFailed { get => _loadFailed; private set => SetProperty(ref _loadFailed, value); }
+        public BitmapImage IamgeSource { get => _iamgeSource; set => SetProperty(ref _iamgeSource, value); }
+        public bool LoadFailed { get => _loadFailed; set =>  SetProperty(ref _loadFailed, value); }
 
         public bool IsLoadingThumb
         {
@@ -31,19 +29,19 @@ namespace ExHentaiDownloader3.ViewModels
             }
         }
 
-        public BitmapImage ThumbSource
+        public BitmapImage ImageSource
         {
             get
             {
-                if (_thumbSource is not null)
-                    return _thumbSource;
+                if (_iamgeSource is not null)
+                    return _iamgeSource;
                 if (IsLoadingThumb)
-                    return _thumbSource;
+                    return _iamgeSource;
 
                 UpdateThumbSource();
-                return _thumbSource;
+                return _iamgeSource;
             }
-            set => SetProperty(ref _thumbSource, value);
+            set => SetProperty(ref _iamgeSource, value);
         }
 
         private async void UpdateThumbSource()
@@ -52,7 +50,7 @@ namespace ExHentaiDownloader3.ViewModels
             BitmapImage tmp = null;
             try
             {
-                string imagePath = await DownloadManager.Instance.DownloadThumb(ThumbUrl);
+                string imagePath = await DownloadManager.Instance.DownloadThumb(_imageUrl);
                 tmp = new BitmapImage(new Uri(imagePath));
             }
             catch (Exception)
@@ -61,7 +59,7 @@ namespace ExHentaiDownloader3.ViewModels
             }
             IsLoadingThumb = false;
 
-            ThumbSource = tmp;
+            ImageSource = tmp;
         }
     }
 }

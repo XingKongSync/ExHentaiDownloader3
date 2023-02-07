@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace ExHentaiDownloader3.Converters
 {
-    public class UnequalToVisibilityConverter : IValueConverter
+    public class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value?.ToString()?.Equals(parameter) == true)
-            {
-                return Visibility.Collapsed;
-            }
-            return Visibility.Visible;
+            if (parameter == null)
+                return value == null ? Visibility.Collapsed : Visibility.Visible;
+            return value == null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return default;
+            throw new NotImplementedException();
         }
     }
 }

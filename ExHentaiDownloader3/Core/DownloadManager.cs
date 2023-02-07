@@ -15,6 +15,7 @@ namespace ExHentaiDownloader3.Core
         private static readonly Lazy<DownloadManager> _instance = new Lazy<DownloadManager>(() => new DownloadManager());
 
         private static readonly string CONST_THUMB_CACHE_PATH = Path.Combine(Path.GetTempPath(), @"ExhentaiDownloader3\Thumbs");
+        private static readonly string CONST_THUMB_BOOK_PATH = Path.Combine(Path.GetTempPath(), @"ExhentaiDownloader3\Books");
 
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(10);
 
@@ -33,8 +34,13 @@ namespace ExHentaiDownloader3.Core
             {
                 try
                 {
+                    Uri uri = new Uri(url);
+                    string fileName = Path.GetFileName(uri.LocalPath);
+
+                    var ret = await DownloadIfNotExistAsync(url, CONST_THUMB_CACHE_PATH, fileName);
                     _semaphore.Release();
-                    return await DownloadIfNotExistAsync(url, CONST_THUMB_CACHE_PATH);
+
+                    return ret;
                 }
                 catch (Exception ex)
                 {
@@ -47,12 +53,41 @@ namespace ExHentaiDownloader3.Core
             throw new Exception("Cannot download thumb", lastError);
         }
 
-        private static async Task<string> DownloadIfNotExistAsync(string url, string directory)
+        public async Task<string> DownloadBigImage(string bookName, string url, int index)
         {
-            Uri uri = new Uri(url);
-            string fileName = Path.GetFileName(uri.LocalPath);
+            bookName = CleanDirectoryName(bookName);
+            string ext = Path.GetExtension(new Uri(url).LocalPath);
+            string filename = $"{index}{ext}";
+            string dir = Path.Combine(CONST_THUMB_BOOK_PATH, bookName);
+
+            Directory.CreateDirectory(dir);
+
+            Exception lastError = null;
+
+            await _semaphore.WaitAsync();
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    var ret = await DownloadIfNotExistAsync(url, dir, filename);
+                    _semaphore.Release();
+                    return ret;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Retry Count: " + i);
+                    lastError = ex;
+                }
+                await Task.Delay(1000);
+            }
+            _semaphore.Release();
+            throw new Exception("Cannot download image", lastError);
+        }
+
+        private static async Task<string> DownloadIfNotExistAsync(string url, string directory, string filename)
+        {
             DirectoryInfo d = new DirectoryInfo(directory);
-            string fileFullPathAndName = Path.Combine(d.FullName, fileName);
+            string fileFullPathAndName = Path.Combine(d.FullName, filename);
             if (!File.Exists(fileFullPathAndName))
             {
                 //说明此文件不存在，则创建
@@ -81,6 +116,25 @@ namespace ExHentaiDownloader3.Core
             }
             Debug.WriteLine("Cache hit: " + fileFullPathAndName);
             return fileFullPathAndName;
+        }
+
+        private string CleanFileName(string filename)
+        {
+            return CleanInvalidChars(Path.GetInvalidFileNameChars(), filename);
+        }
+
+        private string CleanDirectoryName(string dir)
+        {
+            return CleanInvalidChars(Path.GetInvalidPathChars(), dir);
+        }
+
+        private string CleanInvalidChars(char[] invalidChars, string path)
+        {
+            foreach (char c in invalidChars)
+            {
+                path = path.Replace(c, ' ');
+            }
+            return path;
         }
     }
 }
