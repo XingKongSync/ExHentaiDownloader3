@@ -12,6 +12,7 @@
     xmlns:cvt="using:ExHentaiDownloader3.Converters"
     xmlns:ctl="using:ExHentaiDownloader3.Controls"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     d:DataContext="{d:DesignInstance Type=vm:SearchResultVM}"
     x:Name="self">
     <UserControl.Resources>
@@ -28,54 +29,78 @@
             Text="{Binding Title}" 
             Style="{ThemeResource TitleTextBlockStyle}"
             Margin="30 0 0 0"/>
-        <!--Book List-->
-        <ListBox Grid.Row="1"
-                 x:Name="lbBookList"
-                 Margin="0 10 0 0"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
-                 ItemsSource="{Binding Books}" 
-                 SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
-                 Background="Transparent">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <!--Book Item-->
-                    <Border Background="#20000000" Width="150" Height="200" CornerRadius="8" PointerReleased="Border_PointerReleased">
-                        <!--Item Context Menu-->
-                        <Border.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
-                                <MenuFlyoutItem Text="Download"/>
-                            </MenuFlyout>
-                        </Border.ContextFlyout>
-                        <Grid>
-                            <!--Loading-->
-                            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -20 0 0" Visibility="{Binding IsLoadingThumb,Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
-                            <!--Image-->
-                            <Image Stretch="UniformToFill" Source="{Binding ThumbSource, Mode=TwoWay}"/>
-                            <!--Info-->
-                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#60000000">
-                                <TextBlock Text="{Binding Title}" Margin="5" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="60" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self} }"/>
-                            </Border>
-                            <!--Failed-->
-                            <Grid Height="25" Width="25" Margin="0 -20 0 0" Visibility="{Binding LoadFailed, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}">
-                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemColorGrayTextBrush}" StrokeThickness="0"/>
-                                <SymbolIcon Symbol="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--Content-->
+        <Grid Grid.Row="1" Visibility="{Binding IsLoading, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <!--Book List-->
+            <ListBox x:Name="lbBookList"
+                     Margin="0 10 0 0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
+                     ItemsSource="{Binding Books}" 
+                     SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                     Background="Transparent">
+                <ListBox.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                    </TransitionCollection>
+                </ListBox.ItemContainerTransitions>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--Book Item-->
+                        <Border Background="#20000000" Width="150" Height="200" CornerRadius="8" PointerReleased="Border_PointerReleased">
+                            <!--Item Context Menu-->
+                            <Border.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
+                                    <MenuFlyoutItem Text="Download"/>
+                                </MenuFlyout>
+                            </Border.ContextFlyout>
+                            <Grid>
+                                <!--Image-->
+                                <Image Stretch="UniformToFill" Source="{Binding ThumbSource, Mode=TwoWay}"/>
+                                <!--Mosaic-->
+                                <Border HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch" Visibility="{Binding ElementName=self, Path=DataContext.ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=TwoWay}">
+                                    <Border.Background>
+                                        <media:BackdropBlurBrush Amount="4"/>
+                                    </Border.Background>
+                                </Border>
+                                <!--Loading-->
+                                <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -20 0 0" Visibility="{Binding IsLoadingThumb,Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
+                                <!--Info-->
+                                <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#60000000">
+                                    <TextBlock Text="{Binding Title}" Margin="5" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="60" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self} }"/>
+                                </Border>
+                                <!--Failed-->
+                                <Grid Height="25" Width="25" Margin="0 -20 0 0" Visibility="{Binding LoadFailed, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}">
+                                    <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemColorGrayTextBrush}" StrokeThickness="0"/>
+                                    <SymbolIcon Symbol="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Padding" Value="20,10"/>
-                </Style>
-            </ListBox.Resources>
-        </ListBox>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="20,10"/>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+            <!--Pager-->
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0 10 0 20">
+                <Button Content="&lt;&lt; First" Command="{Binding FirstCommand}" Margin="0 0 10 0"/>
+                <Button Content="&lt; Pre" Command="{Binding PreCommand}" Margin="0 0 10 0"/>
+                <Button Content="Next &gt;" Command="{Binding NextCommand}" Margin="0 0 10 0"/>
+                <Button Content="Last &gt;&gt;" Command="{Binding LastComand}"/>
+            </StackPanel>
+        </Grid>
         <!--Detail Dialog-->
         <ContentDialog x:Name="termsOfUseContentDialog"
                        IsSecondaryButtonEnabled="True"
@@ -124,7 +149,6 @@
                 </ScrollViewer>
             </Grid>
         </ContentDialog>
-        
         <!--LoadingRing-->
         <ProgressRing Grid.Row="1" Height="50" Width="50" Visibility="{Binding IsLoading, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
     </Grid>

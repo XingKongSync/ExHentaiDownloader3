@@ -13,5 +13,7 @@ namespace ExHentaiDownloader3.Helpers
         public const string CONST_EXHENTAI_SEARCH = @"https://exhentai.org/?f_search={0}";
 
         public const string CONST_EXHENTAI_SET_PAGE_FORMAT = @"https://exhentai.org/?inline_set=dm_l";
+
+        public const string CONST_EXHENTAI_BOOK_PAGE_FORMAT = @"{0}/?p={1}";
     }
 }

@@ -34,6 +34,7 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221109.1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />

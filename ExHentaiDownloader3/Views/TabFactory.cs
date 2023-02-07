@@ -71,7 +71,7 @@ namespace ExHentaiDownloader3.Views
                 Icon = Symbol.BrowsePhotos,
                 Title = info.Title,
                 Parent = parent,
-                View = new BookView() { ViewModel = new BookVM() { BookInfo = info } }
+                View = new BookView() { ViewModel = new BookVM(info) }
             };
         }
 

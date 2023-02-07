@@ -10,24 +10,99 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
-    d:DataContext="{d:DesignInstance vm:BookVM}">
+    d:DataContext="{d:DesignInstance vm:BookVM}"
+    xmlns:ctl="using:ExHentaiDownloader3.Controls"
+    xmlns:cvt="using:ExHentaiDownloader3.Converters"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    x:Name="self">
+    <UserControl.Resources>
+        <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
+        <cvt:PageIndexPlusOneConverter x:Key="PageIndexPlusOneConverter"/>
+    </UserControl.Resources>
 
     <Grid Style="{StaticResource HeaderTabGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--Header-->
         <TextBlock 
             Text="{Binding BookInfo.Title}" 
             Style="{ThemeResource TitleTextBlockStyle}"
-            Margin="30 0 0 0"/>
+            Margin="30 0 150 0" TextWrapping="NoWrap"
+            TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+        <!--Download-->
         <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" Margin="0 0 30 0">
             <StackPanel Orientation="Horizontal">
-                <!--<Viewbox Height="18">-->
                 <SymbolIcon Symbol="SaveLocal"/>
-                <!--</Viewbox>-->
                 <TextBlock Text="Download" Margin="10 0 0 0"/>
             </StackPanel>
         </Button>
+        <!--Content-->
+        <Grid Grid.Row="1" Visibility="{Binding IsLoading, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=True}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <!--Page List-->
+            <ListBox x:Name="lbPageList"
+                     Margin="0 10 0 0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
+                     ItemsSource="{Binding Pages}" 
+                     SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
+                     Background="Transparent">
+                <ListBox.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                    </TransitionCollection>
+                </ListBox.ItemContainerTransitions>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--Book Item-->
+                        <Border Background="#20000000" Width="200" Height="280" CornerRadius="8" PointerReleased="Border_PointerReleased">
+                            <Grid>
+                                <!--Image-->
+                                <Image Stretch="Uniform" Source="{Binding ThumbSource, Mode=TwoWay}"/>
+                                <!--Mosaic-->
+                                <Border HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch" Visibility="{Binding ElementName=self, Path=DataContext.ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=TwoWay}">
+                                    <Border.Background>
+                                        <media:BackdropBlurBrush Amount="4"/>
+                                    </Border.Background>
+                                </Border>
+                                <!--Loading-->
+                                <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -20 0 0" Visibility="{Binding IsLoadingThumb,Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
+                                <!--Failed-->
+                                <Grid Height="25" Width="25" Margin="0 -20 0 0" Visibility="{Binding LoadFailed, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}">
+                                    <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemColorGrayTextBrush}" StrokeThickness="0"/>
+                                    <SymbolIcon Symbol="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="20,10"/>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+            <!--Pager-->
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0 10 0 20">
+                <Button Content="&lt; Pre" Command="{Binding PreCommand}" Margin="0 0 10 0"/>
+                <TextBlock VerticalAlignment="Center" Margin="0 0 10 0">
+                    <Run Text="{Binding CurrentPage, Converter={StaticResource PageIndexPlusOneConverter}}"/>
+                    <Run Text="/"/>
+                    <Run Text="{Binding PageCount}"/>
+                </TextBlock>
+                <Button Content="Next &gt;" Command="{Binding NextCommand}" Margin="0 0 10 0"/>
+            </StackPanel>
+        </Grid>
+        <!--LoadingRing-->
+        <ProgressRing Grid.Row="1" Height="50" Width="50" Visibility="{Binding IsLoading, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
     </Grid>
 </UserControl>

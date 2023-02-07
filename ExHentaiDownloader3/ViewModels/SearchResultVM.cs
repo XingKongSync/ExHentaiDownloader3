@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Core;
 using ExHentaiDownloader3.Core.Exhentai;
 using ExHentaiDownloader3.Views;
 using Microsoft.UI.Dispatching;
@@ -29,15 +30,57 @@ namespace ExHentaiDownloader3.ViewModels
         public string Url { get => _url; set => SetProperty(ref _url, value); }
         public string Title { get => _title; set => SetProperty(ref _title, value); }
         public int Count { get => _count; set => SetProperty(ref _count, value); }
-        public string FirstUrl { get => _firstUrl; set => SetProperty(ref _firstUrl, value); }
-        public string LastUrl { get => _lastUrl; set => SetProperty(ref _lastUrl, value); }
-        public string PreUrl { get => _preUrl; set => SetProperty(ref _preUrl, value); }
-        public string NextUrl { get => _nextUrl; set => SetProperty(ref _nextUrl, value); }
+        
+        public string FirstUrl 
+        {
+            get => _firstUrl; 
+            set
+            {
+                if (SetProperty(ref _firstUrl, value))
+                    FirstCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public string LastUrl 
+        {
+            get => _lastUrl;
+            set
+            {
+                if (SetProperty(ref _lastUrl, value))
+                    LastComand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public string PreUrl
+        {
+            get => _preUrl;
+            set
+            {
+                if (SetProperty(ref _preUrl, value))
+                    PreCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        public string NextUrl
+        {
+            get => _nextUrl;
+            set
+            {
+                if (SetProperty(ref _nextUrl, value))
+                    NextCommand.NotifyCanExecuteChanged();
+            }
+        }
         public ObservableCollection<BookInfoVM> Books { get => _books; set => SetProperty(ref _books, value); }
         public BookInfoVM SelectedBook { get => _selectedBook; set => SetProperty(ref _selectedBook, value); }
         public RelayCommand<BookInfoVM> OpenBookCommand { get; private set; }
         public RelayCommand<BookInfoVM> OpenBookInBackgroundCommand { get; private set; }
-        
+        public RelayCommand FirstCommand { get; private set; }
+        public RelayCommand LastComand { get; private set; }
+        public RelayCommand PreCommand { get; private set; }
+        public RelayCommand NextCommand { get; private set; }
+
+        public ConfigManager ConfigManager { get => ConfigManager.Instance; }
+
         public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
         
         public TabVM MyTab { get; private set; }
@@ -47,7 +90,43 @@ namespace ExHentaiDownloader3.ViewModels
             MyTab = tabVM;
             OpenBookCommand = new RelayCommand<BookInfoVM>(OpenBookCommandHandler);
             OpenBookInBackgroundCommand = new RelayCommand<BookInfoVM>(OpenBookInBackgroundCommandHandler);
+            FirstCommand = new RelayCommand(FirstCommandHandler, ()=> !string.IsNullOrWhiteSpace(FirstUrl));
+            LastComand = new RelayCommand(LastComandHandler, ()=> !string.IsNullOrWhiteSpace(LastUrl));
+            PreCommand = new RelayCommand(PreCommandHandler, ()=> !string.IsNullOrWhiteSpace(PreUrl));
+            NextCommand = new RelayCommand(NextCommandHandler, ()=> !string.IsNullOrWhiteSpace(NextUrl));
 
+            DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void FirstCommandHandler()
+        {
+            if (string.IsNullOrWhiteSpace(FirstUrl))
+                return;
+            Url = FirstUrl;
+            DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void LastComandHandler()
+        {
+            if (string.IsNullOrWhiteSpace(LastUrl))
+                return;
+            Url = LastUrl;
+            DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void PreCommandHandler()
+        {
+            if (string.IsNullOrWhiteSpace(PreUrl))
+                return;
+            Url = PreUrl;
+            DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void NextCommandHandler()
+        {
+            if (string.IsNullOrWhiteSpace(NextUrl))
+                return;
+            Url = NextUrl;
             DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
         }
 

@@ -32,8 +32,9 @@ namespace ExHentaiDownloader3.Controls
             {
                 UIElement child = children[i] as UIElement;
 
+
                 // Flow passes its own constraint to children
-                child.Measure(constraint);
+                try { child.Measure(constraint); } catch { }
                 Size sz = child.DesiredSize;
 
                 if (curLineSize.Width + sz.Width > constraint.Width) //need to switch to another line

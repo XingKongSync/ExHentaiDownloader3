@@ -69,6 +69,7 @@ namespace ExHentaiDownloader3.Core
         private string _cookies = string.Empty;
         private bool _enableSound;
         private string _downloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ExHentaiDownloader3\Library");
+        private bool _useMosaic = false;
         private ObservableCollection<string> _history = new ObservableCollection<string>();
 
         public string Cookies 
@@ -84,6 +85,7 @@ namespace ExHentaiDownloader3.Core
         }
         public bool EnableSound { get => _enableSound; set => SetProperty(ref _enableSound, value); }
         public string LibraryFolder { get => _downloadFolder; set => SetProperty(ref _downloadFolder, value); }
+        public bool UseMosaic { get => _useMosaic; set => SetProperty(ref _useMosaic, value); }
         public ObservableCollection<string> History { get => _history; set => SetProperty(ref _history, value); }
 
         [JsonIgnore]
@@ -113,5 +115,6 @@ namespace ExHentaiDownloader3.Core
         string Cookies { get; set; }
         bool EnableSound { get; set; }
         string LibraryFolder { get; set; }
+        bool UseMosaic { get; set; }
     }
 }

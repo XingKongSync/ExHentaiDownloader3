@@ -16,7 +16,6 @@ namespace ExHentaiDownloader3.Core.Exhentai
     {
         private string _url;
         private string _rawHtml;
-        private IHtmlDocument _document;
         private List<BookInfoVM> _bookInfos;
         private int _count;
         private string _firstUrl;
@@ -39,12 +38,12 @@ namespace ExHentaiDownloader3.Core.Exhentai
 
             await TryLoadHtmlAsync();
             HtmlParser parser = new HtmlParser();
-            _document = await parser.ParseDocumentAsync(_rawHtml);
+            IHtmlDocument document = await parser.ParseDocumentAsync(_rawHtml);
 
-            TryLoadCount(_document);
-            TryLoadAllPagerUrl(_document);
+            TryLoadCount(document);
+            TryLoadAllPagerUrl(document);
 
-            TryLoadBookInfo(_document);
+            TryLoadBookInfo(document);
         }
 
         private async Task TryLoadHtmlAsync()
@@ -70,7 +69,7 @@ namespace ExHentaiDownloader3.Core.Exhentai
         {
             try
             {
-                string rawCount = _document.QuerySelector(".searchtext > p").TextContent;
+                string rawCount = document.QuerySelector(".searchtext > p").TextContent;
                 Count = GetInt(rawCount);
             }
             catch (Exception)
@@ -112,8 +111,8 @@ namespace ExHentaiDownloader3.Core.Exhentai
                     //Title
                     BookInfoVM vm = new BookInfoVM();
                     vm.Title = dom.QuerySelector(".glink").TextContent;
-                    vm.Url = dom.QuerySelector("a").GetAttribute("href");
-                    vm.PageCount = GetInt(dom.QuerySelector(".glhide").TextContent);
+                    vm.Url = dom.QuerySelector(".glname").QuerySelector("a").GetAttribute("href");
+                    vm.PageCount = GetInt(dom.QuerySelector(".glhide").Children.FirstOrDefault(c => c.TextContent.Contains("pages"))?.TextContent);
                     vm.Tags = LoadTags(dom);
                     vm.ThumbUrl = dom.QuerySelector("img")?.GetAttribute("data-src") ?? dom.QuerySelector("img")?.GetAttribute("src");
                     BookInfos.Add(vm);
@@ -144,6 +143,9 @@ namespace ExHentaiDownloader3.Core.Exhentai
 
         private int GetInt(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+                return 0;
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in text)
             {

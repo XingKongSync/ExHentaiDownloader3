@@ -8,29 +8,24 @@ using System.Threading.Tasks;
 
 namespace ExHentaiDownloader3.ViewModels
 {
-    public class BookInfoVM : BindableBase
+    public class BigImageInfoVM : BindableBase
     {
-        private string _url = string.Empty;
-        private string _title = string.Empty;
-        private List<string> _tags = new List<string>();
-        private int _pageCount = 0;
-        private string _thumbUrl = string.Empty;
+        private string _thumbUrl;
+        private string _detailPageUrl;
+
         private bool _isLoadingThumb = false;
         private BitmapImage _thumbSource;
         private bool _loadFailed = false;
 
-        public string Url { get => _url; set => SetProperty(ref _url, value); }
-        public string Title { get => _title; set => SetProperty(ref _title, value); }
-        public List<string> Tags { get => _tags; set => SetProperty(ref _tags, value); }
-        public int PageCount { get => _pageCount; set => SetProperty(ref _pageCount, value); }
         public string ThumbUrl { get => _thumbUrl; set => SetProperty(ref _thumbUrl, value); }
+        public string DetailPageUrl { get => _detailPageUrl; set => SetProperty(ref _detailPageUrl, value); }
         public bool LoadFailed { get => _loadFailed; private set => SetProperty(ref _loadFailed, value); }
 
-        public bool IsLoadingThumb 
+        public bool IsLoadingThumb
         {
             get => _isLoadingThumb;
             set
-            { 
+            {
                 if (SetProperty(ref _isLoadingThumb, value))
                     RaisePropertyChanged(nameof(LoadFailed));
             }
@@ -42,15 +37,14 @@ namespace ExHentaiDownloader3.ViewModels
             {
                 if (_thumbSource is not null)
                     return _thumbSource;
-                if (IsLoadingThumb) 
+                if (IsLoadingThumb)
                     return _thumbSource;
 
                 UpdateThumbSource();
                 return _thumbSource;
             }
-            set => SetProperty(ref _thumbSource, value); 
+            set => SetProperty(ref _thumbSource, value);
         }
-
 
         private async void UpdateThumbSource()
         {

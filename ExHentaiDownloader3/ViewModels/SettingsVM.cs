@@ -26,8 +26,10 @@ namespace ExHentaiDownloader3.ViewModels
         public string Cookies { get => GetCacheProperty<string>(); set => SetCacheProperty(value); }
 
         public bool EnableSound { get => GetCacheProperty<bool>(); set => SetCacheProperty(value); }
-        
+
         public string LibraryFolder { get => GetCacheProperty<string>(); set => SetCacheProperty(value); }
+
+        public bool UseMosaic { get => GetCacheProperty<bool>(); set => SetCacheProperty(value); }
 
         #endregion
 
@@ -97,7 +99,7 @@ namespace ExHentaiDownloader3.ViewModels
             var folderInfo = await fp.PickSingleFolderAsync();
             if (folderInfo is not null)
             {
-                //TODO: ...
+                LibraryFolder = folderInfo.Name;
             }
         }
     }
