@@ -17,6 +17,7 @@ namespace ExHentaiDownloader3.ViewModels
         private BitmapImage _bigImageSource;
         private bool _LoadBigFailed = false;
         private string _bigImageUrl;
+        private string _nlBigImageUrl;
 
         public int Index { get => _index; set => SetProperty(ref _index, value); }
         public string BookName { get => _bookName; set => SetProperty(ref _bookName, value); }
@@ -52,8 +53,18 @@ namespace ExHentaiDownloader3.ViewModels
                     await bip.Load();
 
                     _bigImageUrl = bip.ImageUrl;
+                    _nlBigImageUrl = bip.NlImageUrl;
                 }
-                string imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _bigImageUrl, Index);
+
+                string imagePath;
+                try
+                {
+                    imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _bigImageUrl, Index);
+                }
+                catch (Exception)
+                {
+                    imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _nlBigImageUrl, Index);
+                }
                 tmp = new BitmapImage(new Uri(imagePath));
             }
             catch (Exception ex)
@@ -65,5 +76,6 @@ namespace ExHentaiDownloader3.ViewModels
             BigImageSource = tmp;
             IsLoadingBigImage= false;
         }
+   
     }
 }

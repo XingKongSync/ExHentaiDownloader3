@@ -21,7 +21,7 @@
             <local:ZoomControl.MyContent>
                 <Grid>
                     <!--Image-->
-                    <Image Source="{x:Bind ImageSource, Mode=TwoWay}" Stretch="Uniform"/>
+                    <Image Source="{x:Bind ImageSource, Mode=TwoWay}"/>
                     <!--Mosaic-->
                     <Border HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch" Visibility="{x:Bind Path=ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=OneWay}">
                         <Border.Background>
@@ -31,11 +31,15 @@
                 </Grid>
             </local:ZoomControl.MyContent>
         </local:ZoomControl>
-        <Button Command="{x:Bind BackCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 20 0 0">
-            <SymbolIcon Symbol="Back"/>
+        <Button Command="{x:Bind BackCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 20 0 0" Height="40" Width="40">
+            <Viewbox>
+                <SymbolIcon Symbol="Back" />
+            </Viewbox>
         </Button>
-        <Button x:Name="btFullScreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 20 20 0" Click="btFullScreen_Click">
-            <SymbolIcon Symbol="FullScreen"/>
+        <Button x:Name="btFullScreen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 20 20 0" Click="btFullScreen_Click" Height="40" Width="40">
+            <Viewbox>
+                <SymbolIcon Symbol="FullScreen" />
+            </Viewbox>
         </Button>
     </Grid>
 </UserControl>

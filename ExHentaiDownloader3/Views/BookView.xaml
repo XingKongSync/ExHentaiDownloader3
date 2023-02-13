@@ -51,8 +51,9 @@
                 <ListBox x:Name="lbPageList"
                          Margin="0 10 0 0"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
-                         ItemsSource="{Binding Pages}" 
+                         ItemsSource="{Binding Pages, Mode=TwoWay}" 
                          SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
+                         SelectedIndex="{Binding SelectedPageIndex, Mode=TwoWay}"
                          Background="Transparent">
                     <ListBox.ItemContainerTransitions>
                         <TransitionCollection>
@@ -110,7 +111,11 @@
         </Grid>
         <!--Image Viewer-->
         <Grid Style="{StaticResource HeaderTabGridStyle}" Visibility="{Binding SelectedPage,Mode=TwoWay, Converter={StaticResource NullToVisibilityConverter}}" >
+            <!--Image-->
             <ctl:ImageViewer ImageSource="{Binding SelectedPage.BigImageSource, Mode=TwoWay}" BackCommand="{Binding ImageBackCommand}"/>
+            <!--PrevNext Button-->
+            <Button Content="&lt;" Height="40" Width="40" Margin="20 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding PreImageCommand}"/>
+            <Button Content="&gt;" Height="40" Width="40" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding NextImageCommand}"/>
             <!--BigImage LoadingRing-->
             <ProgressRing Grid.RowSpan="2" Height="50" Width="50" Visibility="{Binding SelectedPage.IsLoadingBigImage, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False}"/>
             <!--Failed-->

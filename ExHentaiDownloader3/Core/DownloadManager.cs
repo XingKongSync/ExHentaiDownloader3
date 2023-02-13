@@ -62,26 +62,36 @@ namespace ExHentaiDownloader3.Core
 
             Directory.CreateDirectory(dir);
 
-            Exception lastError = null;
+            //Exception lastError = null;
 
             await _semaphore.WaitAsync();
-            for (int i = 0; i < 10; i++)
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    try
+            //    {
+            //        var ret = await DownloadIfNotExistAsync(url, dir, filename);
+            //        _semaphore.Release();
+            //        return ret;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Debug.WriteLine("Retry Count: " + i);
+            //        lastError = ex;
+            //    }
+            //    await Task.Delay(1000);
+            //}
+            //_semaphore.Release();
+            //throw new Exception("Cannot download image", lastError);
+
+            try
             {
-                try
-                {
-                    var ret = await DownloadIfNotExistAsync(url, dir, filename);
-                    _semaphore.Release();
-                    return ret;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Retry Count: " + i);
-                    lastError = ex;
-                }
-                await Task.Delay(1000);
+                return await DownloadIfNotExistAsync(url, dir, filename);
             }
-            _semaphore.Release();
-            throw new Exception("Cannot download image", lastError);
+            finally
+            {
+                _semaphore.Release();
+
+            }
         }
 
         private static async Task<string> DownloadIfNotExistAsync(string url, string directory, string filename)

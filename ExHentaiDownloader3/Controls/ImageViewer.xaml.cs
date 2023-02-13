@@ -38,7 +38,6 @@ namespace ExHentaiDownloader3.Controls
             DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ImageViewer), new PropertyMetadata(null));
 
 
-
         public ICommand BackCommand
         {
             get { return (ICommand)GetValue(BackCommandProperty); }
