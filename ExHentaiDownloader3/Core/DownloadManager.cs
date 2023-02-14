@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExHentaiDownloader3.Core.Exhentai;
+using ExHentaiDownloader3.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -53,36 +55,30 @@ namespace ExHentaiDownloader3.Core
             throw new Exception("Cannot download thumb", lastError);
         }
 
-        public async Task<string> DownloadBigImage(string bookName, string url, int index)
+        public async Task<string> DownloadBigImage(string bookName, string url, string nlurl, int index)
         {
-            bookName = CleanDirectoryName(bookName);
+            string imagePath;
+            try
+            {
+                imagePath = await InnerDownloadBigImage(bookName, url, index);
+            }
+            catch (Exception)
+            {
+                imagePath = await InnerDownloadBigImage(bookName, nlurl, index);
+            }
+            return imagePath;
+        }
+
+        private async Task<string> InnerDownloadBigImage(string bookName, string url, int index)
+        {
+            bookName = FileNameHelper.CleanDirectoryName(bookName);
             string ext = Path.GetExtension(new Uri(url).LocalPath);
             string filename = $"{index}{ext}";
             string dir = Path.Combine(CONST_THUMB_BOOK_PATH, bookName);
 
             Directory.CreateDirectory(dir);
 
-            //Exception lastError = null;
-
             await _semaphore.WaitAsync();
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    try
-            //    {
-            //        var ret = await DownloadIfNotExistAsync(url, dir, filename);
-            //        _semaphore.Release();
-            //        return ret;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Debug.WriteLine("Retry Count: " + i);
-            //        lastError = ex;
-            //    }
-            //    await Task.Delay(1000);
-            //}
-            //_semaphore.Release();
-            //throw new Exception("Cannot download image", lastError);
-
             try
             {
                 return await DownloadIfNotExistAsync(url, dir, filename);
@@ -90,7 +86,6 @@ namespace ExHentaiDownloader3.Core
             finally
             {
                 _semaphore.Release();
-
             }
         }
 
@@ -128,23 +123,6 @@ namespace ExHentaiDownloader3.Core
             return fileFullPathAndName;
         }
 
-        private string CleanFileName(string filename)
-        {
-            return CleanInvalidChars(Path.GetInvalidFileNameChars(), filename);
-        }
 
-        private string CleanDirectoryName(string dir)
-        {
-            return CleanInvalidChars(Path.GetInvalidPathChars(), dir);
-        }
-
-        private string CleanInvalidChars(char[] invalidChars, string path)
-        {
-            foreach (char c in invalidChars)
-            {
-                path = path.Replace(c, ' ');
-            }
-            return path;
-        }
     }
 }

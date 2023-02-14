@@ -56,15 +56,7 @@ namespace ExHentaiDownloader3.ViewModels
                     _nlBigImageUrl = bip.NlImageUrl;
                 }
 
-                string imagePath;
-                try
-                {
-                    imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _bigImageUrl, Index);
-                }
-                catch (Exception)
-                {
-                    imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _nlBigImageUrl, Index);
-                }
+                string imagePath = await DownloadManager.Instance.DownloadBigImage(BookName, _bigImageUrl, _nlBigImageUrl, Index);
                 tmp = new BitmapImage(new Uri(imagePath));
             }
             catch (Exception ex)
