@@ -31,7 +31,7 @@
                 </Grid>
             </local:ZoomControl.MyContent>
         </local:ZoomControl>
-        <Button Command="{x:Bind BackCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 20 0 0" Height="40" Width="40">
+        <Button Command="{x:Bind BackCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 5 0 0" Height="40" Width="40">
             <Viewbox>
                 <SymbolIcon Symbol="Back" />
             </Viewbox>

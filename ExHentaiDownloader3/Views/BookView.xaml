@@ -35,7 +35,7 @@
                 Margin="30 0 150 0" TextWrapping="NoWrap"
                 TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
             <!--Download-->
-            <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" Margin="0 0 30 0">
+            <Button Command="{Binding DownloadCommand}" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" Margin="0 0 30 0">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="SaveLocal"/>
                     <TextBlock Text="Download" Margin="10 0 0 0"/>
@@ -49,7 +49,7 @@
                 </Grid.RowDefinitions>
                 <!--Page List-->
                 <ListBox x:Name="lbPageList"
-                         Margin="0 10 0 0"
+                         Margin="20 10 0 0"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
                          ItemsSource="{Binding Pages, Mode=TwoWay}" 
                          SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
@@ -62,7 +62,7 @@
                     </ListBox.ItemContainerTransitions>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
+                            <ctl:AlignableWrapPanel/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>

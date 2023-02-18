@@ -16,7 +16,6 @@
     <UserControl.Resources>
         <cvt:UnequalToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
     </UserControl.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

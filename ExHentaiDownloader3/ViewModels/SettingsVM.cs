@@ -99,7 +99,7 @@ namespace ExHentaiDownloader3.ViewModels
             var folderInfo = await fp.PickSingleFolderAsync();
             if (folderInfo is not null)
             {
-                LibraryFolder = folderInfo.Name;
+                LibraryFolder = folderInfo.Path;
             }
         }
     }

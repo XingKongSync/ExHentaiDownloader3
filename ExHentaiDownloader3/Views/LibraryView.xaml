@@ -1,6 +1,3 @@
-<!-- Copyright (c) Microsoft Corporation and Contributors. -->
-<!-- Licensed under the MIT License. -->
-
 <UserControl
     x:Class="ExHentaiDownloader3.Views.LibraryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,21 +7,180 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
-    d:DataContext="{d:DesignInstance vm:LibraryVM}">
+    xmlns:ctl="using:ExHentaiDownloader3.Controls"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    xmlns:cvt="using:ExHentaiDownloader3.Converters"
+    d:DataContext="{d:DesignInstance vm:LibraryVM}"
+    x:Name="libraryView">
+
     <UserControl.DataContext>
         <vm:LibraryVM x:Name="ViewModel"/>
     </UserControl.DataContext>
 
-    <Grid Style="{StaticResource HeaderTabGridStyle}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock 
-            Text="Library" 
-            Style="{ThemeResource TitleTextBlockStyle}"
-            Margin="30 0 0 0"/>
-        
-        
+    <UserControl.Resources>
+        <cvt:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
+        <cvt:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+
+        <vm:LibraryMode x:Key="Library">Library</vm:LibraryMode>
+        <vm:LibraryMode x:Key="LibraryItem">LibraryItem</vm:LibraryMode>
+        <vm:LibraryMode x:Key="LibraryItemImage">LibraryItemImage</vm:LibraryMode>
+    </UserControl.Resources>
+
+    <Grid>
+        <!--Library-->
+        <Grid Style="{StaticResource HeaderTabGridStyle}" Visibility="{Binding DisplayMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={StaticResource Library}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Title-->
+            <TextBlock 
+                Text="Library" 
+                Style="{ThemeResource TitleTextBlockStyle}" 
+                TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
+                 ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"
+                Margin="30 0 150 0"/>
+            <!--Refresh-->
+            <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" Margin="0 0 30 0" Command="{Binding RefreshCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Symbol="Refresh"/>
+                    <TextBlock Text="Refresh" Margin="10 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <!--Content-->
+            <!--Book List-->
+            <ListBox x:Name="lbBookList"
+                     Grid.Row="1"
+                     Margin="20 10 0 0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
+                     ItemsSource="{Binding LibraryItemsSource}" 
+                     SelectedItem="{Binding SelectedLibraryItem, Mode=TwoWay}"
+                     Background="Transparent">
+                <ListBox.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                    </TransitionCollection>
+                </ListBox.ItemContainerTransitions>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ctl:AlignableWrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--Book Item-->
+                        <Border Background="#20000000" Width="150" Height="200" CornerRadius="8">
+                            <!--Item Context Menu-->
+                            <!--<Border.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
+                                    <MenuFlyoutItem Text="Download"/>
+                                </MenuFlyout>
+                            </Border.ContextFlyout>-->
+                            <Grid>
+                                <!--Image-->
+                                <Image Stretch="UniformToFill" Source="{Binding ThumbImageSource, Mode=TwoWay}"/>
+                                <!--Mosaic-->
+                                <Border HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch" Visibility="{Binding ElementName=libraryView, Path=DataContext.ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=TwoWay}">
+                                    <Border.Background>
+                                        <media:BackdropBlurBrush Amount="4"/>
+                                    </Border.Background>
+                                </Border>
+                                <!--Info-->
+                                <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#60000000">
+                                    <TextBlock Text="{Binding Title}" Margin="5" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="60" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self} }"/>
+                                </Border>
+                                <!--Failed-->
+                                <Grid Height="25" Width="25" Margin="0 -20 0 0" Visibility="{Binding ThumbPath, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=1}">
+                                    <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemColorGrayTextBrush}" StrokeThickness="0"/>
+                                    <SymbolIcon Symbol="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="20,10"/>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+        </Grid>
+        <!--LibraryItem-->
+        <Grid Style="{StaticResource HeaderTabGridStyle}" Visibility="{Binding DisplayMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={StaticResource LibraryItem}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--Title-->
+            <TextBlock 
+                Text="{Binding SelectedLibraryItem.Title}" 
+                Style="{ThemeResource TitleTextBlockStyle}"
+                Margin="80 0 150 0"
+                TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+            <!--BackToLibrary-->
+            <Button Command="{Binding BackToLibraryCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 5 0 0" Height="40" Width="40">
+                <Viewbox>
+                    <SymbolIcon Symbol="Back" />
+                </Viewbox>
+            </Button>
+            <!--Content-->
+            <!--ItemList-->
+            <ListBox x:Name="lbItemList"
+                     Grid.Row="1"
+                     SelectedIndex="{Binding SelectedItemImageIndex, Mode=TwoWay}"
+                         Margin="20 10 0 0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
+                         ItemsSource="{Binding SelectedLibraryItem.Images, Mode=TwoWay}" 
+                         SelectedItem="{Binding SelectedItemImage, Mode=TwoWay}"
+                         Background="Transparent">
+                <ListBox.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                    </TransitionCollection>
+                </ListBox.ItemContainerTransitions>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ctl:AlignableWrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--Book Item-->
+                        <Border Background="#20000000" Width="200" Height="280" CornerRadius="8">
+                            <Grid>
+                                <!--Image-->
+                                <Image Stretch="Uniform" Source="{Binding ImageSource, Mode=TwoWay}"/>
+                                <!--Mosaic-->
+                                <Border HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch" Visibility="{Binding ElementName=libraryView, Path=DataContext.ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=TwoWay}">
+                                    <Border.Background>
+                                        <media:BackdropBlurBrush Amount="4"/>
+                                    </Border.Background>
+                                </Border>
+                                <!--Failed-->
+                                <Grid Height="25" Width="25" Margin="0 -20 0 0" Visibility="{Binding ImageSource, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=1}">
+                                    <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemColorGrayTextBrush}" StrokeThickness="0"/>
+                                    <SymbolIcon Symbol="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="20,10"/>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+        </Grid>
+        <!--LibraryItemImage-->
+        <Grid Style="{StaticResource HeaderTabGridStyle}" Visibility="{Binding DisplayMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={StaticResource LibraryItemImage}}">
+            <!--Image-->
+            <ctl:ImageViewer ImageSource="{Binding SelectedItemImage.ImageSource, Mode=TwoWay}" BackCommand="{Binding BackToLibraryItemCommand}"/>
+            <!--PrevNext Button-->
+            <Button Content="&lt;" Height="40" Width="40" Margin="20 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding PreImageCommand}"/>
+            <Button Content="&gt;" Height="40" Width="40" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding NextImageCommand}"/>
+        </Grid>
     </Grid>
 </UserControl>

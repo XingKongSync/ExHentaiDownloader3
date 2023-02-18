@@ -19,7 +19,7 @@
         <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
         <cvt:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
     </UserControl.Resources>
-    
+
     <Grid Style="{StaticResource HeaderTabGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -37,7 +37,7 @@
             </Grid.RowDefinitions>
             <!--Book List-->
             <ListBox x:Name="lbBookList"
-                     Margin="0 10 0 0"
+                     Margin="20 10 0 0"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" 
                      ItemsSource="{Binding Books}" 
                      SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
@@ -49,13 +49,13 @@
                 </ListBox.ItemContainerTransitions>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ctl:AlignableWrapPanel HorizontalAlignment="Center"/>
+                        <ctl:AlignableWrapPanel />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <!--Book Item-->
-                        <Border Background="#20000000" Width="150" Height="200" CornerRadius="8" PointerReleased="Border_PointerReleased">
+                        <Border Background="#20000000" Width="200" Height="280" CornerRadius="8" PointerReleased="Border_PointerReleased">
                             <!--Item Context Menu-->
                             <Border.ContextFlyout>
                                 <MenuFlyout>

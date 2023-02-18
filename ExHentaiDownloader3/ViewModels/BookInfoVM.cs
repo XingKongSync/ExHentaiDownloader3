@@ -1,5 +1,6 @@
 ﻿using ExHentaiDownloader3.Core;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,10 @@ namespace ExHentaiDownloader3.ViewModels
         public List<string> Tags { get => _tags; set => SetProperty(ref _tags, value); }
         public int PageCount { get => _pageCount; set => SetProperty(ref _pageCount, value); }
         public string ThumbUrl { get => _thumbUrl; set => SetProperty(ref _thumbUrl, value); }
+        [JsonIgnore]
         public bool LoadFailed { get => _loadFailed; private set => SetProperty(ref _loadFailed, value); }
 
+        [JsonIgnore]
         public bool IsLoadingThumb 
         {
             get => _isLoadingThumb;
@@ -36,6 +39,7 @@ namespace ExHentaiDownloader3.ViewModels
             }
         }
 
+        [JsonIgnore]
         public BitmapImage ThumbSource
         {
             get

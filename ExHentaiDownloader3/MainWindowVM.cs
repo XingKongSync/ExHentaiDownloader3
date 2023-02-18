@@ -28,6 +28,7 @@ namespace ExHentaiDownloader3
         {
             Tabs.Add(TabFactory.CreateHomeTab());
 
+            FooterTabs.Add(TabFactory.CreateDownloadTaskTab());
             FooterTabs.Add(TabFactory.CreateLibraryTab());
             FooterTabs.Add(TabFactory.CreateSettingsTab());
 

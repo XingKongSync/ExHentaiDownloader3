@@ -1,6 +1,7 @@
 ﻿using ExHentaiDownloader3.Core.Exhentai;
 using ExHentaiDownloader3.ViewModels;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,19 +21,28 @@ namespace ExHentaiDownloader3.Core
 
         public static DownloadTaskManager Instance { get { return _instance.Value; } }
 
-        private ObservableCollection<DownloadTask> _tasks = new ObservableCollection<DownloadTask>();
+        public ObservableCollection<DownloadTask> Tasks { get; private set; } = new ObservableCollection<DownloadTask>();
+
         private SemaphoreSlim _semaphore = new SemaphoreSlim(5);
 
         private DownloadTaskManager() { }
 
         public void CreateNewTask(BookInfoVM info)
         {
-            _tasks.Add(new DownloadTask(info, _semaphore));
+            if (Tasks.Any(t=> t?.Url?.Equals(info?.Url) == true))
+            {
+                return;
+            }
+
+            var task = new DownloadTask(info, _semaphore);
+            Tasks.Add(task);
+            task.Start();
         }
 
         public void DeleteTask(DownloadTask task)
         {
-            _tasks.Remove(task);
+            task.Stop();
+            Tasks.Remove(task);
         }
 
     }
@@ -40,11 +50,15 @@ namespace ExHentaiDownloader3.Core
     public class DownloadTask : BindableBase
     {
         private BookInfoVM _info;
+        private bool _isLoadingThumb = false;
+        private BitmapImage _thumbSource;
+        private bool _thumbLoadFailed = false;
+
         private SemaphoreSlim _semaphore = new SemaphoreSlim(5);
 
-        private int _currentCount;
-        private int _errorCount;
-        private TaskStatus _status;
+        private int _currentCount = 0;
+        private int _errorCount = 0;
+        private TaskStatus _status = TaskStatus.Waiting;
 
         private Task _downlaodTask;
         private CancellationTokenSource _cancelTokenSource; 
@@ -56,6 +70,29 @@ namespace ExHentaiDownloader3.Core
         public int CurrentCount { get => _currentCount; set => SetProperty(ref _currentCount, value); }
         public TaskStatus Status { get => _status; set => SetProperty(ref _status, value); }
         public int ErrorCount { get => _errorCount; set => SetProperty(ref _errorCount, value); }
+
+        public bool ThumbLoadFailed { get => _thumbLoadFailed; private set => SetProperty(ref _thumbLoadFailed, value); }
+
+        public bool IsLoadingThumb
+        {
+            get => _isLoadingThumb;
+            set => SetProperty(ref _isLoadingThumb, value);
+        }
+
+        public BitmapImage ThumbSource
+        {
+            get
+            {
+                if (_thumbSource is not null)
+                    return _thumbSource;
+                if (IsLoadingThumb)
+                    return _thumbSource;
+
+                UpdateThumbSource();
+                return _thumbSource;
+            }
+            set => SetProperty(ref _thumbSource, value);
+        }
 
         public DownloadTask(BookInfoVM info, SemaphoreSlim semaphore)
         {
@@ -79,37 +116,89 @@ namespace ExHentaiDownloader3.Core
             _cancelTokenSource?.Cancel();
         }
 
+        private async void UpdateThumbSource()
+        {
+            IsLoadingThumb = true;
+            BitmapImage tmp = null;
+            try
+            {
+                string imagePath = await DownloadManager.Instance.DownloadThumb(ThumbUrl);
+                tmp = new BitmapImage(new Uri(imagePath));
+            }
+            catch (Exception)
+            {
+                ThumbLoadFailed = true;
+            }
+            IsLoadingThumb = false;
+
+            ThumbSource = tmp;
+        }
+
+        private void CreateInfoFile()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void IncreaseCurrentCount()
+        {
+            lock (this)
+            {
+                CurrentCount++;
+            }
+        }
+
+        private void IncreaseErrorCount()
+        {
+            lock (this)
+            {
+                ErrorCount++;
+            }
+        }
+
         private void DownloadTaskHandler()
         {
             CancellationToken? token = _cancelTokenSource?.Token;
             if (token == null)
                 return;
 
+            bool waitSuccess = false;
             CurrentCount = 0;
             try
             {
                 Status = TaskStatus.Waiting;
                 _semaphore.Wait((CancellationToken)token);
+                waitSuccess = true;
+
+                LibraryManager.Instance.CreateLibraryInfoFile(_info);
+                token.Value.ThrowIfCancellationRequested();
 
                 Status = TaskStatus.Downloading;
 
-                foreach (BigImageInfoVM info in GetBigImageInfos())
+                Parallel.ForEach(GetBigImageInfos(), new ParallelOptions() { MaxDegreeOfParallelism = 5 }, info =>
                 {
                     token.Value.ThrowIfCancellationRequested();
 
                     BigImagePage bp = new BigImagePage(info.DetailPageUrl);
                     bp.Load().Wait();
 
+                    token.Value.ThrowIfCancellationRequested();
                     try
                     {
                         string imagePath = DownloadManager.Instance.DownloadBigImage(Title, bp.ImageUrl, bp.NlImageUrl, info.Index).Result;
                         LibraryManager.Instance.CopyToLibrary(Title, imagePath);
+                        IncreaseCurrentCount();
                     }
                     catch (Exception)
                     {
-                        ErrorCount++;
+                        IncreaseErrorCount();
                     }
-                }
+                });
 
                 Status = TaskStatus.Finished;
             }
@@ -120,6 +209,11 @@ namespace ExHentaiDownloader3.Core
             catch (Exception)
             {
                 Status = TaskStatus.Error;
+            }
+            finally
+            {
+                if (waitSuccess)
+                    _semaphore.Release();
             }
         }
 

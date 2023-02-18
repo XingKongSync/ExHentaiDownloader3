@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace ExHentaiDownloader3
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
+            var dq = MainWindow.Instance?.DispatcherQueue;
+            if (!dq.HasThreadAccess)
+            {
+                dq.TryEnqueue(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
+                return;
+            } 
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 

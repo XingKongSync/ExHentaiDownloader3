@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Services.Maps;
 
 namespace ExHentaiDownloader3.Views
 {
@@ -82,6 +83,16 @@ namespace ExHentaiDownloader3.Views
                 Icon = Symbol.Library,
                 Title = "Library",
                 View = new LibraryView()
+            };
+        }
+
+        public static TabVM CreateDownloadTaskTab()
+        {
+            return new TabVM()
+            {
+                Icon = Symbol.Download,
+                Title = "Download",
+                View = new DownloadTaskView() { ViewModel = new DownloadTaskVM() }
             };
         }
     }

@@ -68,7 +68,7 @@ namespace ExHentaiDownloader3.Core
         private CookieCollection _cookieCollection;
         private string _cookies = string.Empty;
         private bool _enableSound;
-        private string _libraryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ExHentaiDownloader3\Library");
+        private string _libraryFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"ExHentai");
         private bool _useMosaic = false;
         private ObservableCollection<string> _history = new ObservableCollection<string>();
 
