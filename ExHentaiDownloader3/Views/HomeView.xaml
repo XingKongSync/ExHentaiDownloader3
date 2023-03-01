@@ -26,11 +26,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--Header Picture-->
-        <Viewbox Grid.Row="1" Height="100" Width="100">
+        <!--<Viewbox Grid.Row="1" Height="100" Width="100">
             <SymbolIcon Symbol="World"/>
-        </Viewbox>
+        </Viewbox>-->
+        <Image Grid.Row="1" Height="300" Width="300" Source="/Assets/logo.png"/>
         <!--Search Bar-->
-        <Grid Grid.Row="2" Margin="0 40 0 0">
+        <Grid Grid.Row="2" Margin="0 80 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*" MaxWidth="500"/>

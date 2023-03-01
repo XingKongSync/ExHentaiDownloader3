@@ -1,4 +1,5 @@
-﻿using ExHentaiDownloader3.Core.Exhentai;
+﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Core.Exhentai;
 using ExHentaiDownloader3.ViewModels;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -94,10 +95,14 @@ namespace ExHentaiDownloader3.Core
             set => SetProperty(ref _thumbSource, value);
         }
 
+        public RelayCommand RetryCommand { get; private set; }
+
         public DownloadTask(BookInfoVM info, SemaphoreSlim semaphore)
         {
             _info = info;
             _semaphore = semaphore;
+
+            RetryCommand = new RelayCommand(Start);
         }
 
         public void Start()
@@ -132,17 +137,6 @@ namespace ExHentaiDownloader3.Core
             IsLoadingThumb = false;
 
             ThumbSource = tmp;
-        }
-
-        private void CreateInfoFile()
-        {
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-            }
         }
 
         private void IncreaseCurrentCount()

@@ -142,6 +142,7 @@ namespace ExHentaiDownloader3.ViewModels
         private void OpenBookInBackgroundCommandHandler(BookInfoVM info)
         {
             var bookVM = TabFactory.CreateBookTab(info, MyTab);
+            MyTab.IsExpanded = true;
             if (MyTab.Children is null)
             {
                 MyTab.Children = new ObservableCollection<TabVM>();

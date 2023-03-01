@@ -21,6 +21,8 @@
     <Content Remove="Assets\BadgeLogo.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\logo.png" />
+    <None Remove="Assets\logo2.png" />
     <None Remove="Controls\ImageViewer.xaml" />
     <None Remove="Controls\ZoomControl.xaml" />
     <None Remove="Views\BookView.xaml" />
