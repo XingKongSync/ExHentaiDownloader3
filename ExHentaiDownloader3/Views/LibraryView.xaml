@@ -70,7 +70,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <!--Book Item-->
-                        <Border Background="#20000000" Width="150" Height="200" CornerRadius="8">
+                        <Border Background="#20000000" Width="200" Height="280" CornerRadius="8">
                             <!--Item Context Menu-->
                             <!--<Border.ContextFlyout>
                                 <MenuFlyout>

@@ -15,6 +15,7 @@ namespace ExHentaiDownloader3.ViewModels
     public class SettingsVM : BindableBase, IConfig
     {
         public RelayCommand ChooseDownloadFolderCommand { get; private set; }
+        public AsyncRelayCommand ClearCacheCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
 
@@ -36,6 +37,7 @@ namespace ExHentaiDownloader3.ViewModels
         public SettingsVM() 
         {
             ChooseDownloadFolderCommand = new RelayCommand(ChooseDownloadFolderCommandHandler);
+            ClearCacheCommand = new AsyncRelayCommand(ClearCacheCommandHandler);
             SaveCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Discard);
         }
@@ -101,6 +103,11 @@ namespace ExHentaiDownloader3.ViewModels
             {
                 LibraryFolder = folderInfo.Path;
             }
+        }
+
+        private async Task ClearCacheCommandHandler()
+        {
+            await DownloadManager.Instance.ClearCache();
         }
     }
 }

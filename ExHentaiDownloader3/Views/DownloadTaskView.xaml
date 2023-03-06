@@ -50,17 +50,16 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
+                            <!--<RowDefinition Height="*"/>-->
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <!--Image-->
-                        <Border Margin="0 0 20 0" Grid.Row="1" Grid.RowSpan="3" CornerRadius="8">
+                        <Border Margin="0 0 20 0" Grid.RowSpan="3" CornerRadius="8">
                             <Grid>
                                 <!--Image-->
-                                <Image  Source="{Binding ThumbSource}"/>
+                                <Image Height="120" Width="90" Source="{Binding ThumbSource}"/>
                                 <!--Mosaic-->
                                 <Border BorderThickness="0" Visibility="{Binding ElementName=downloadTaskView, Path=DataContext.ConfigManager.Config.UseMosaic, Converter={StaticResource UnequalToVisibilityConverters}, ConverterParameter=False, Mode=TwoWay}">
                                     <Border.Background>
@@ -77,17 +76,17 @@
                             </Grid>
                         </Border>
                         <!--Title-->
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="{Binding Title}" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="{Binding Title}" Grid.Column="1" TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
                         <!--Progress-->
-                        <ProgressBar Grid.Row="2" Grid.Column="1" Value="{Binding CurrentCount}" Maximum="{Binding ImageCount}" IsIndeterminate="{Binding Status, Converter={StaticResource DownloadStatusToIndeterminateConverter}}"/>
+                        <ProgressBar Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding CurrentCount}" Maximum="{Binding ImageCount}" IsIndeterminate="{Binding Status, Converter={StaticResource DownloadStatusToIndeterminateConverter}}"/>
                         <!--Info-->
-                        <TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="0 0 20 0">
+                        <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0 0 20 0">
                             <Run Text="Progress:"/>
                             <Run Text="{Binding CurrentCount}"/>
                             <Run Text="/"/>
                             <Run Text="{Binding ImageCount}"/>
                         </TextBlock>
-                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
                             <Run Text="Status:"/>
                             <Run Text="{Binding Status}"/>
                         </TextBlock>
@@ -96,15 +95,15 @@
                             Command="{Binding ElementName=downloadTaskView, Path=ViewModel.CancelTaskCommand}"
                             CommandParameter="{Binding}"
                             Visibility="{Binding Status, Converter={StaticResource EnumToVisibilityConverter},ConverterParameter={StaticResource TaskDownloading}}"
-                            Margin="20 0 -10 0" Height="45" Width="45" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            Margin="20 0 -10 0" Height="45" Width="45" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <SymbolIcon Symbol="Cancel"/>
                         </Button>
                         <!--Retry-->
                         <Button 
                             Command="{Binding RetryCommand}"
                             Visibility="{Binding Status, Converter={StaticResource EnumToVisibilityConverter},ConverterParameter={StaticResource TaskError}}"
-                            Margin="20 0 -10 0" Height="45" Width="45" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <SymbolIcon Symbol="Cancel"/>
+                            Margin="20 0 -10 0" Height="45" Width="45" Grid.RowSpan="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <SymbolIcon Symbol="Refresh"/>
                         </Button>
                     </Grid>
                 </DataTemplate>

@@ -60,7 +60,7 @@
                             <Border.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
-                                    <MenuFlyoutItem Text="Download"/>
+                                    <MenuFlyoutItem Text="Download" Command="{Binding ViewModel.DownloadCommand, ElementName=self}" CommandParameter="{Binding }"/>
                                 </MenuFlyout>
                             </Border.ContextFlyout>
                             <Grid>

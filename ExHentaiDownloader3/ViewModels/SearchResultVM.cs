@@ -74,6 +74,7 @@ namespace ExHentaiDownloader3.ViewModels
         public BookInfoVM SelectedBook { get => _selectedBook; set => SetProperty(ref _selectedBook, value); }
         public RelayCommand<BookInfoVM> OpenBookCommand { get; private set; }
         public RelayCommand<BookInfoVM> OpenBookInBackgroundCommand { get; private set; }
+        public RelayCommand<BookInfoVM> DownloadCommand { get; private set; }
         public RelayCommand FirstCommand { get; private set; }
         public RelayCommand LastComand { get; private set; }
         public RelayCommand PreCommand { get; private set; }
@@ -90,12 +91,18 @@ namespace ExHentaiDownloader3.ViewModels
             MyTab = tabVM;
             OpenBookCommand = new RelayCommand<BookInfoVM>(OpenBookCommandHandler);
             OpenBookInBackgroundCommand = new RelayCommand<BookInfoVM>(OpenBookInBackgroundCommandHandler);
+            DownloadCommand = new RelayCommand<BookInfoVM>(DownloadCommandHandler);
             FirstCommand = new RelayCommand(FirstCommandHandler, ()=> !string.IsNullOrWhiteSpace(FirstUrl));
             LastComand = new RelayCommand(LastComandHandler, ()=> !string.IsNullOrWhiteSpace(LastUrl));
             PreCommand = new RelayCommand(PreCommandHandler, ()=> !string.IsNullOrWhiteSpace(PreUrl));
             NextCommand = new RelayCommand(NextCommandHandler, ()=> !string.IsNullOrWhiteSpace(NextUrl));
 
             DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void DownloadCommandHandler(BookInfoVM obj)
+        {
+            DownloadTaskManager.Instance.CreateNewTask(obj);
         }
 
         private void FirstCommandHandler()

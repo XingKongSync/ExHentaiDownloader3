@@ -62,7 +62,8 @@ namespace ExHentaiDownloader3.Core
         private TaskStatus _status = TaskStatus.Waiting;
 
         private Task _downlaodTask;
-        private CancellationTokenSource _cancelTokenSource; 
+        private CancellationTokenSource _cancelTokenSource;
+        private int _currentDownloadBookPage = 0;//当前正在下载的页面索引
 
         public string Title { get => _info.Title; }
         public string Url { get => _info.Url; }
@@ -174,7 +175,7 @@ namespace ExHentaiDownloader3.Core
 
                 Status = TaskStatus.Downloading;
 
-                Parallel.ForEach(GetBigImageInfos(), new ParallelOptions() { MaxDegreeOfParallelism = 5 }, info =>
+                foreach (BigImageInfoVM info in GetBigImageInfos())
                 {
                     token.Value.ThrowIfCancellationRequested();
 
@@ -192,7 +193,7 @@ namespace ExHentaiDownloader3.Core
                     {
                         IncreaseErrorCount();
                     }
-                });
+                }
 
                 Status = TaskStatus.Finished;
             }
@@ -211,13 +212,13 @@ namespace ExHentaiDownloader3.Core
             }
         }
 
+
         private IEnumerable<BigImageInfoVM> GetBigImageInfos()
         {
             int pageSize;
             int pageCount;
-            int currentPage = 0;
             BookPage bookPage = new BookPage(Url, ImageCount, Title);
-            bookPage.Load(currentPage).Wait();
+            bookPage.Load(0).Wait();
             pageSize = bookPage.PageSize;
             if (pageSize == 0)
                 yield break;
@@ -225,13 +226,13 @@ namespace ExHentaiDownloader3.Core
             pageCount = bookPage.ImageCount / pageSize;
             pageCount += (bookPage.ImageCount % pageSize == 0 ? 0 : 1);
 
-            for (int i = 0; i < pageCount; i++)
+            for (; _currentDownloadBookPage < pageCount; _currentDownloadBookPage++)
             {
                 try
                 {
-                    if (i != 0)
+                    if (_currentDownloadBookPage != 0)
                     {
-                        bookPage.Load(i).Wait();
+                        bookPage.Load(_currentDownloadBookPage).Wait();
                     }
                 }
                 catch (Exception ex)

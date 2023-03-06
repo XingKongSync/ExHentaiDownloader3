@@ -25,6 +25,15 @@ namespace ExHentaiDownloader3.Core
 
         private DownloadManager() { }
 
+        public async Task ClearCache()
+        {
+            await Task.Run(() =>
+            {
+                try { Directory.Delete(CONST_THUMB_CACHE_PATH, true); } catch { }
+                try { Directory.Delete(CONST_THUMB_BOOK_PATH, true); } catch { }
+            });
+        }
+
         public async Task<string> DownloadThumb(string url)
         {
             Directory.CreateDirectory(CONST_THUMB_CACHE_PATH);
