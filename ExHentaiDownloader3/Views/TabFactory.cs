@@ -18,7 +18,7 @@ namespace ExHentaiDownloader3.Views
             return new TabVM()
             {
                 Icon = Symbol.Home,
-                Title = "Home",
+                Title = Properties.Resources.Home,
                 View = new HomeView(),
             };
         }
@@ -30,17 +30,17 @@ namespace ExHentaiDownloader3.Views
             if (string.IsNullOrWhiteSpace(searchText))
             {
                 url = UrlHelper.CONST_EXHENTAI_ROOT;
-                title = "Latest Content";
+                title = Properties.Resources.LatestContent;
             }
             else
             {
                 url = string.Format(UrlHelper.CONST_EXHENTAI_SEARCH, Uri.EscapeDataString(searchText));
-                title = $"Search: {searchText}";
+                title = $"{Properties.Resources.Search}: {searchText}";
             }
 
             TabVM tabVM = new TabVM
             {
-                Icon = Microsoft.UI.Xaml.Controls.Symbol.Pictures,
+                Icon = Symbol.Pictures,
                 Title = title
             };
             SearchResultVM vm = new SearchResultVM(tabVM) 
@@ -60,7 +60,7 @@ namespace ExHentaiDownloader3.Views
             return new TabVM()
             {
                 Icon = Symbol.Setting,
-                Title = "Setting",
+                Title = Properties.Resources.Setting,
                 View = new SettingsView()
             };
         }
@@ -81,7 +81,7 @@ namespace ExHentaiDownloader3.Views
             return new TabVM()
             {
                 Icon = Symbol.Library,
-                Title = "Library",
+                Title = Properties.Resources.Library,
                 View = new LibraryView()
             };
         }
@@ -91,7 +91,7 @@ namespace ExHentaiDownloader3.Views
             return new TabVM()
             {
                 Icon = Symbol.Download,
-                Title = "Download",
+                Title = Properties.Resources.Download,
                 View = new DownloadTaskView() { ViewModel = new DownloadTaskVM() }
             };
         }

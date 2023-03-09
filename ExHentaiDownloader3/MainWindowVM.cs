@@ -1,12 +1,7 @@
 ﻿using ExHentaiDownloader3.ViewModels;
 using ExHentaiDownloader3.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace ExHentaiDownloader3
 {

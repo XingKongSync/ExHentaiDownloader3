@@ -12,6 +12,7 @@
     x:Name="self"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
     xmlns:cvt="using:ExHentaiDownloader3.Converters"
+    xmlns:prop="using:ExHentaiDownloader3.Properties"
     d:DataContext="{d:DesignInstance Type=vm:HomeVM}">
     <UserControl.Resources>
         <cvt:UnequalToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
