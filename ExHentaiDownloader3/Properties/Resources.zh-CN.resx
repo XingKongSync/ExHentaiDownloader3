@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Browse" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="Cache" xml:space="preserve">
+    <value>缓存</value>
+  </data>
   <data name="Canceled" xml:space="preserve">
     <value>已取消</value>
+  </data>
+  <data name="CleanCache" xml:space="preserve">
+    <value>清空缓存</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>清空</value>
@@ -132,11 +141,20 @@
   <data name="Downloading" xml:space="preserve">
     <value>下载中</value>
   </data>
+  <data name="EnableSound" xml:space="preserve">
+    <value>启用音效</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>失败</value>
   </data>
   <data name="Finished" xml:space="preserve">
     <value>已完成</value>
+  </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>&lt;&lt; 第一页</value>
+  </data>
+  <data name="Hint" xml:space="preserve">
+    <value>提示</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>历史记录</value>
@@ -144,11 +162,23 @@
   <data name="Home" xml:space="preserve">
     <value>主页</value>
   </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>最末页 &gt;&gt;</value>
+  </data>
   <data name="LatestContent" xml:space="preserve">
     <value>最新发布</value>
   </data>
   <data name="Library" xml:space="preserve">
     <value>图库</value>
+  </data>
+  <data name="LibraryPath" xml:space="preserve">
+    <value>下载路径</value>
+  </data>
+  <data name="Mosaic" xml:space="preserve">
+    <value>马赛克</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>后一页 &gt;</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>打开</value>
@@ -156,11 +186,17 @@
   <data name="OpenInBackground" xml:space="preserve">
     <value>后台打开</value>
   </data>
+  <data name="PrePage" xml:space="preserve">
+    <value>&lt; 前一页</value>
+  </data>
   <data name="Progress" xml:space="preserve">
     <value>进度</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
+  </data>
+  <data name="SaveChangesHint" xml:space="preserve">
+    <value>您是否要保存更改？</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>搜索</value>
@@ -171,8 +207,14 @@
   <data name="Setting" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="Sound" xml:space="preserve">
+    <value>音效</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>状态</value>
+  </data>
+  <data name="UseMosaic" xml:space="preserve">
+    <value>打码</value>
   </data>
   <data name="Waiting" xml:space="preserve">
     <value>等待中</value>

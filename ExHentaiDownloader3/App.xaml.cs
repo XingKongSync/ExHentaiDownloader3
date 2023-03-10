@@ -15,10 +15,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Globalization;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,6 +40,8 @@ namespace ExHentaiDownloader3
         {
             this.InitializeComponent();
             FocusVisualKind = FocusVisualKind.Reveal;
+
+            ApplicationLanguages.PrimaryLanguageOverride = Thread.CurrentThread.CurrentUICulture.Name;
         }
 
         /// <summary>

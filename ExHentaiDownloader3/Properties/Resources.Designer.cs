@@ -61,11 +61,38 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Browse 的本地化字符串。
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cache 的本地化字符串。
+        /// </summary>
+        public static string Cache {
+            get {
+                return ResourceManager.GetString("Cache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Canceled 的本地化字符串。
         /// </summary>
         public static string Canceled {
             get {
                 return ResourceManager.GetString("Canceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Clean Cache 的本地化字符串。
+        /// </summary>
+        public static string CleanCache {
+            get {
+                return ResourceManager.GetString("CleanCache", resourceCulture);
             }
         }
         
@@ -106,6 +133,15 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Enable Sound 的本地化字符串。
+        /// </summary>
+        public static string EnableSound {
+            get {
+                return ResourceManager.GetString("EnableSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Error 的本地化字符串。
         /// </summary>
         public static string Error {
@@ -120,6 +156,24 @@ namespace ExHentaiDownloader3.Properties {
         public static string Finished {
             get {
                 return ResourceManager.GetString("Finished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;&lt; First 的本地化字符串。
+        /// </summary>
+        public static string FirstPage {
+            get {
+                return ResourceManager.GetString("FirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Hint 的本地化字符串。
+        /// </summary>
+        public static string Hint {
+            get {
+                return ResourceManager.GetString("Hint", resourceCulture);
             }
         }
         
@@ -142,6 +196,15 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Last &gt;&gt; 的本地化字符串。
+        /// </summary>
+        public static string LastPage {
+            get {
+                return ResourceManager.GetString("LastPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Latest Content 的本地化字符串。
         /// </summary>
         public static string LatestContent {
@@ -156,6 +219,33 @@ namespace ExHentaiDownloader3.Properties {
         public static string Library {
             get {
                 return ResourceManager.GetString("Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Library Path 的本地化字符串。
+        /// </summary>
+        public static string LibraryPath {
+            get {
+                return ResourceManager.GetString("LibraryPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Mosaic 的本地化字符串。
+        /// </summary>
+        public static string Mosaic {
+            get {
+                return ResourceManager.GetString("Mosaic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Next &gt; 的本地化字符串。
+        /// </summary>
+        public static string NextPage {
+            get {
+                return ResourceManager.GetString("NextPage", resourceCulture);
             }
         }
         
@@ -178,6 +268,15 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt; Pre 的本地化字符串。
+        /// </summary>
+        public static string PrePage {
+            get {
+                return ResourceManager.GetString("PrePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Progress 的本地化字符串。
         /// </summary>
         public static string Progress {
@@ -192,6 +291,15 @@ namespace ExHentaiDownloader3.Properties {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save your changes? 的本地化字符串。
+        /// </summary>
+        public static string SaveChangesHint {
+            get {
+                return ResourceManager.GetString("SaveChangesHint", resourceCulture);
             }
         }
         
@@ -223,11 +331,29 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Sound 的本地化字符串。
+        /// </summary>
+        public static string Sound {
+            get {
+                return ResourceManager.GetString("Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Status 的本地化字符串。
         /// </summary>
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Use Mosaic 的本地化字符串。
+        /// </summary>
+        public static string UseMosaic {
+            get {
+                return ResourceManager.GetString("UseMosaic", resourceCulture);
             }
         }
         

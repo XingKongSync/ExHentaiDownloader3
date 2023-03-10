@@ -97,10 +97,10 @@
             </ListBox>
             <!--Pager-->
             <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0 10 0 20">
-                <Button Content="&lt;&lt; First" Command="{Binding FirstCommand}" Margin="0 0 10 0"/>
-                <Button Content="&lt; Pre" Command="{Binding PreCommand}" Margin="0 0 10 0"/>
-                <Button Content="Next &gt;" Command="{Binding NextCommand}" Margin="0 0 10 0"/>
-                <Button Content="Last &gt;&gt;" Command="{Binding LastComand}"/>
+                <Button Content="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=FirstPage}" Command="{Binding FirstCommand}" Margin="0 0 10 0"/>
+                <Button Content="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=PrePage}" Command="{Binding PreCommand}" Margin="0 0 10 0"/>
+                <Button Content="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=NextPage}" Command="{Binding NextCommand}" Margin="0 0 10 0"/>
+                <Button Content="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=LastPage}" Command="{Binding LastComand}"/>
             </StackPanel>
         </Grid>
         <!--Detail Dialog-->
