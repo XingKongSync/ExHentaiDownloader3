@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.UI.Xaml;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -24,6 +25,7 @@ namespace ExHentaiDownloader3.Core
             {
                 _config = new ConfigEnitty();
             }
+            ElementSoundPlayer.State = Config.EnableSound ? ElementSoundPlayerState.On : ElementSoundPlayerState.Off;
         }
 
         private void MainWindow_Closed(object sender, Microsoft.UI.Xaml.WindowEventArgs args)
@@ -83,7 +85,17 @@ namespace ExHentaiDownloader3.Core
                 }
             }
         }
-        public bool EnableSound { get => _enableSound; set => SetProperty(ref _enableSound, value); }
+        public bool EnableSound
+        {
+            get => _enableSound;
+            set
+            {
+                if (SetProperty(ref _enableSound, value))
+                {
+                    ElementSoundPlayer.State = value ? ElementSoundPlayerState.On : ElementSoundPlayerState.Off;
+                }
+            }
+        }
         public string LibraryFolder { get => _libraryFolder; set => SetProperty(ref _libraryFolder, value); }
         public bool UseMosaic { get => _useMosaic; set => SetProperty(ref _useMosaic, value); }
         public ObservableCollection<string> History { get => _history; set => SetProperty(ref _history, value); }

@@ -18,6 +18,8 @@
     <UserControl.Resources>
         <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
         <cvt:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+        <cvt:LanguageConverter x:Key="LanguageConverter"/>
+        <cvt:IconConverter x:Key="IconConverter" />
     </UserControl.Resources>
 
     <Grid Style="{StaticResource HeaderTabGridStyle}">
@@ -59,8 +61,8 @@
                             <!--Item Context Menu-->
                             <Border.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
-                                    <MenuFlyoutItem Text="Download" Command="{Binding ViewModel.DownloadCommand, ElementName=self}" CommandParameter="{Binding }"/>
+                                    <MenuFlyoutItem Icon="{Binding Converter={StaticResource IconConverter}, ConverterParameter=Bullets}" Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=OpenInBackground}" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
+                                    <MenuFlyoutItem Icon="{Binding Converter={StaticResource IconConverter}, ConverterParameter=Download}" Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Download}" Command="{Binding ViewModel.DownloadCommand, ElementName=self}" CommandParameter="{Binding }"/>
                                 </MenuFlyout>
                             </Border.ContextFlyout>
                             <Grid>
@@ -104,9 +106,9 @@
         <!--Detail Dialog-->
         <ContentDialog x:Name="termsOfUseContentDialog"
                        IsSecondaryButtonEnabled="True"
-                       PrimaryButtonText="Open" 
-                       CloseButtonText="Close"
-                       SecondaryButtonText="Open In Background"
+                       PrimaryButtonText="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Open}" 
+                       CloseButtonText="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Close}"
+                       SecondaryButtonText="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=OpenInBackground}"
                        Style="{StaticResource MyContentDialogStyle}"
                        DefaultButton="Primary"
                        PrimaryButtonCommand="{Binding OpenBookCommand}"

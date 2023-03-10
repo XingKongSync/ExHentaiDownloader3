@@ -12,10 +12,10 @@
     x:Name="self"
     xmlns:vm="using:ExHentaiDownloader3.ViewModels"
     xmlns:cvt="using:ExHentaiDownloader3.Converters"
-    xmlns:prop="using:ExHentaiDownloader3.Properties"
     d:DataContext="{d:DesignInstance Type=vm:HomeVM}">
     <UserControl.Resources>
         <cvt:UnequalToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
+        <cvt:LanguageConverter x:Key="LanguageConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="2*" MaxWidth="500"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <AutoSuggestBox x:Name="abSearch" Text="{Binding SearchText, Mode=TwoWay}" Grid.Column="1" PlaceholderText="Type keywords, tags" QueryIcon="Find" QuerySubmitted="abSearch_QuerySubmitted"/>
+            <AutoSuggestBox x:Name="abSearch" Text="{Binding SearchText, Mode=TwoWay}" Grid.Column="1" PlaceholderText="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=SearchPlaceHolder}" QueryIcon="Find" QuerySubmitted="abSearch_QuerySubmitted"/>
         </Grid>
         <!--History-->
         <Grid Grid.Row="3" Margin="0 40 0 0" MinHeight="75" Visibility="{Binding HistorySearchItems.Count, Converter={StaticResource EqualToVisibilityConverter}, ConverterParameter=0}">
@@ -51,7 +51,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="History" Grid.Column="1" Margin="10 0 0 0"/>
+            <TextBlock Text="{x:Bind Converter={StaticResource LanguageConverter},ConverterParameter=History}" Grid.Column="1" Margin="10 0 0 0"/>
             <GridView Grid.Row="1" Grid.Column="1" Margin="0 5 0 0" ItemsSource="{Binding HistorySearchItems}" SelectionMode="None">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>

@@ -61,6 +61,15 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Canceled 的本地化字符串。
+        /// </summary>
+        public static string Canceled {
+            get {
+                return ResourceManager.GetString("Canceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Clear 的本地化字符串。
         /// </summary>
         public static string Clear {
@@ -70,11 +79,47 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Close 的本地化字符串。
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Download 的本地化字符串。
         /// </summary>
         public static string Download {
             get {
                 return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Downloading 的本地化字符串。
+        /// </summary>
+        public static string Downloading {
+            get {
+                return ResourceManager.GetString("Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error 的本地化字符串。
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Finished 的本地化字符串。
+        /// </summary>
+        public static string Finished {
+            get {
+                return ResourceManager.GetString("Finished", resourceCulture);
             }
         }
         
@@ -115,6 +160,42 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Open 的本地化字符串。
+        /// </summary>
+        public static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open In Background 的本地化字符串。
+        /// </summary>
+        public static string OpenInBackground {
+            get {
+                return ResourceManager.GetString("OpenInBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Progress 的本地化字符串。
+        /// </summary>
+        public static string Progress {
+            get {
+                return ResourceManager.GetString("Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Refresh 的本地化字符串。
+        /// </summary>
+        public static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Search 的本地化字符串。
         /// </summary>
         public static string Search {
@@ -124,11 +205,38 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Type keywords, tags 的本地化字符串。
+        /// </summary>
+        public static string SearchPlaceHolder {
+            get {
+                return ResourceManager.GetString("SearchPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Setting 的本地化字符串。
         /// </summary>
         public static string Setting {
             get {
                 return ResourceManager.GetString("Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Status 的本地化字符串。
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Waiting 的本地化字符串。
+        /// </summary>
+        public static string Waiting {
+            get {
+                return ResourceManager.GetString("Waiting", resourceCulture);
             }
         }
     }

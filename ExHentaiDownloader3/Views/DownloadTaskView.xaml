@@ -19,6 +19,7 @@
         <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
         <cvt:DownloadStatusToIndeterminateConverter x:Key="DownloadStatusToIndeterminateConverter"/>
         <cvt:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <cvt:LanguageConverter x:Key="LanguageConverter"/>
 
         <core:TaskStatus x:Key="TaskError">Error</core:TaskStatus>
         <core:TaskStatus x:Key="TaskDownloading">Downloading</core:TaskStatus>
@@ -31,11 +32,11 @@
         </Grid.RowDefinitions>
         <!--Title-->
         <TextBlock 
-            Text="Download" 
+            Text="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Download}" 
             Style="{ThemeResource TitleTextBlockStyle}"
             Margin="30 0 0 0"/>
         <!--Content-->
-        <ListView Grid.Row="1" ItemsSource="{Binding Manager.Tasks}">
+        <ListView Grid.Row="1" ItemsSource="{Binding Manager.Tasks}" Margin="20">
             <ListView.ItemContainerTransitions>
                 <TransitionCollection>
                     <AddDeleteThemeTransition />
@@ -81,14 +82,16 @@
                         <ProgressBar Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding CurrentCount}" Maximum="{Binding ImageCount}" IsIndeterminate="{Binding Status, Converter={StaticResource DownloadStatusToIndeterminateConverter}}"/>
                         <!--Info-->
                         <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="0 0 20 0">
-                            <Run Text="Progress:"/>
+                            <Run Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Progress}"/>
+                            <Run Text=":"/>
                             <Run Text="{Binding CurrentCount}"/>
                             <Run Text="/"/>
                             <Run Text="{Binding ImageCount}"/>
                         </TextBlock>
                         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1">
-                            <Run Text="Status:"/>
-                            <Run Text="{Binding Status}"/>
+                            <Run Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Status}"/>
+                            <Run Text=":"/>
+                            <Run Text="{Binding Status, Converter={StaticResource LanguageConverter}}"/>
                         </TextBlock>
                         <!--Delete-->
                         <Button 

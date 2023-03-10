@@ -21,6 +21,7 @@
         <cvt:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
         <cvt:UnequalToVisibilityConverter x:Key="UnequalToVisibilityConverters"/>
         <cvt:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <cvt:LanguageConverter x:Key="LanguageConverter"/>
 
         <vm:LibraryMode x:Key="Library">Library</vm:LibraryMode>
         <vm:LibraryMode x:Key="LibraryItem">LibraryItem</vm:LibraryMode>
@@ -36,7 +37,7 @@
             </Grid.RowDefinitions>
             <!--Title-->
             <TextBlock 
-                Text="Library" 
+                Text="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Library}" 
                 Style="{ThemeResource TitleTextBlockStyle}" 
                 TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
                  ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"
@@ -45,7 +46,7 @@
             <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Right" Margin="0 0 30 0" Command="{Binding RefreshCommand}">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="Refresh"/>
-                    <TextBlock Text="Refresh" Margin="10 0 0 0"/>
+                    <TextBlock Text="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Refresh}" Margin="10 0 0 0"/>
                 </StackPanel>
             </Button>
             <!--Content-->

@@ -103,6 +103,7 @@ namespace ExHentaiDownloader3.ViewModels
         private void DownloadCommandHandler(BookInfoVM obj)
         {
             DownloadTaskManager.Instance.CreateNewTask(obj);
+            MainWindow.Instance.VM.SelectedTab = MainWindow.Instance.VM.DownloadTab;
         }
 
         private void FirstCommandHandler()

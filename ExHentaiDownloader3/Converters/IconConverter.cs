@@ -16,6 +16,14 @@ namespace ExHentaiDownloader3.Converters
             {
                 return new SymbolIcon(sym);
             }
+            if (value is string str && Enum.TryParse<Symbol>(str, out var result))
+            {
+                return new SymbolIcon(result);
+            }
+            if (parameter is string str1 && Enum.TryParse(str1, out result))
+            {
+                return new SymbolIcon(result);
+            }
             //if (value is string str && Enum.TryParse(typeof(Symbol), str, out object tmp))
             //{
             //    return new SymbolIcon((Symbol)tmp);

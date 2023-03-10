@@ -76,8 +76,8 @@ namespace ExHentaiDownloader3.ViewModels
         public RelayCommand PreImageCommand { get; private set; }
         public RelayCommand NextImageCommand { get; private set; }
 
-
         public ConfigManager ConfigManager { get => ConfigManager.Instance; }
+
         public LibraryVM()
         {
             RefreshCommand = new RelayCommand(RefreshCommandHandler);
@@ -85,6 +85,8 @@ namespace ExHentaiDownloader3.ViewModels
             BackToLibraryItemCommand = new RelayCommand(BackToLibraryItemCommandHandler);
             PreImageCommand = new RelayCommand(PreImageCommandHandler, () => SelectedItemImageIndex > 0);
             NextImageCommand = new RelayCommand(NextImageCommandHandler, () => SelectedItemImageIndex < SelectedLibraryItem?.Images?.Count - 1);
+
+            RefreshCommandHandler();
         }
         private void RefreshCommandHandler()
         {

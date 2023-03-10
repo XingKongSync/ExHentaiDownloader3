@@ -1,5 +1,6 @@
 ﻿using ExHentaiDownloader3.ViewModels;
 using ExHentaiDownloader3.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
@@ -14,6 +15,8 @@ namespace ExHentaiDownloader3
         public ObservableCollection<TabVM> FooterTabs { get; private set; } = new ObservableCollection<TabVM>();
         public TabVM SelectedTab { get => _selectedTab; set => SetProperty(ref _selectedTab, value); }
 
+        public TabVM DownloadTab { get; private set; }
+
         public MainWindowVM() 
         {
             InitPages();
@@ -23,7 +26,9 @@ namespace ExHentaiDownloader3
         {
             Tabs.Add(TabFactory.CreateHomeTab());
 
-            FooterTabs.Add(TabFactory.CreateDownloadTaskTab());
+            DownloadTab = TabFactory.CreateDownloadTaskTab();
+
+            FooterTabs.Add(DownloadTab);
             FooterTabs.Add(TabFactory.CreateLibraryTab());
             FooterTabs.Add(TabFactory.CreateSettingsTab());
 

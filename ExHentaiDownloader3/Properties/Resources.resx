@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Finished</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>History</value>
@@ -135,10 +150,31 @@
   <data name="Library" xml:space="preserve">
     <value>Library</value>
   </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OpenInBackground" xml:space="preserve">
+    <value>Open In Background</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SearchPlaceHolder" xml:space="preserve">
+    <value>Type keywords, tags</value>
+  </data>
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Waiting</value>
   </data>
 </root>
