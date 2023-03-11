@@ -71,9 +71,14 @@
                                 <EntranceThemeTransition IsStaggeringEnabled="True" />
                             </TransitionCollection>
                         </NavigationViewItem.Transitions>
+                        <!--ContextMenu-->
                         <NavigationViewItem.ContextFlyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Icon="{Binding Converter={StaticResource IconConverter}, ConverterParameter=Cancel}" Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Close}" Command="{Binding CloseCommand}"/>
+                                <MenuFlyoutItem Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Close}" Command="{Binding CloseCommand}">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Cancel"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
                     </NavigationViewItem>

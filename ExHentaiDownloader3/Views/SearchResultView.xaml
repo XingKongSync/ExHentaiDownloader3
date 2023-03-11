@@ -61,8 +61,16 @@
                             <!--Item Context Menu-->
                             <Border.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Icon="{Binding Converter={StaticResource IconConverter}, ConverterParameter=Bullets}" Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=OpenInBackground}" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
-                                    <MenuFlyoutItem Icon="{Binding Converter={StaticResource IconConverter}, ConverterParameter=Download}" Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Download}" Command="{Binding ViewModel.DownloadCommand, ElementName=self}" CommandParameter="{Binding }"/>
+                                    <MenuFlyoutItem Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=OpenInBackground}" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Bullets"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=Download}" Command="{Binding ViewModel.DownloadCommand, ElementName=self}" CommandParameter="{Binding }">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Download"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
                                 </MenuFlyout>
                             </Border.ContextFlyout>
                             <Grid>
