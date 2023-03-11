@@ -2,6 +2,7 @@
 using ExHentaiDownloader3.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,6 +89,7 @@ namespace ExHentaiDownloader3.ViewModels
 
             RefreshCommandHandler();
         }
+
         private void RefreshCommandHandler()
         {
             LibraryManager.Instance.Refresh();

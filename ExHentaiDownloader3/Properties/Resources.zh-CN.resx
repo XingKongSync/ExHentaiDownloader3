@@ -186,6 +186,9 @@
   <data name="OpenInBackground" xml:space="preserve">
     <value>后台打开</value>
   </data>
+  <data name="OpenInExplorer" xml:space="preserve">
+    <value>用资源管理器打开</value>
+  </data>
   <data name="PrePage" xml:space="preserve">
     <value>&lt; 前一页</value>
   </data>
@@ -202,7 +205,7 @@
     <value>搜索</value>
   </data>
   <data name="SearchPlaceHolder" xml:space="preserve">
-    <value>输入关键词、Tags</value>
+    <value>输入关键词、Tag</value>
   </data>
   <data name="Setting" xml:space="preserve">
     <value>设置</value>

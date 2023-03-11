@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace ExHentaiDownloader3.Helpers
 {
@@ -11,12 +6,7 @@ namespace ExHentaiDownloader3.Helpers
     {
         public static string CleanFileName(string filename)
         {
-            return CleanInvalidChars(Path.GetInvalidFileNameChars(), filename);
-        }
-
-        public static string CleanDirectoryName(string dir)
-        {
-            return CleanInvalidChars(Path.GetInvalidPathChars(), dir);
+            return CleanInvalidChars(Path.GetInvalidPathChars(), CleanInvalidChars(Path.GetInvalidFileNameChars(), filename));
         }
 
         public static string CleanInvalidChars(char[] invalidChars, string path)

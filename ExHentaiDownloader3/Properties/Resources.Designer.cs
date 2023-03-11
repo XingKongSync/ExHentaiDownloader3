@@ -268,6 +268,15 @@ namespace ExHentaiDownloader3.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Open In Explorer 的本地化字符串。
+        /// </summary>
+        public static string OpenInExplorer {
+            get {
+                return ResourceManager.GetString("OpenInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &lt; Pre 的本地化字符串。
         /// </summary>
         public static string PrePage {

@@ -73,12 +73,15 @@
                         <!--Book Item-->
                         <Border Background="#20000000" Width="200" Height="280" CornerRadius="8">
                             <!--Item Context Menu-->
-                            <!--<Border.ContextFlyout>
+                            <Border.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="Open In Background" Command="{Binding ViewModel.OpenBookInBackgroundCommand, ElementName=self}" CommandParameter="{Binding }"/>
-                                    <MenuFlyoutItem Text="Download"/>
+                                    <MenuFlyoutItem Text="{Binding Converter={StaticResource LanguageConverter},ConverterParameter=OpenInExplorer}" Command="{Binding OpenInExplorerCommand}" CommandParameter="{Binding }">
+                                        <MenuFlyoutItem.Icon>
+                                            <SymbolIcon Symbol="Folder"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
                                 </MenuFlyout>
-                            </Border.ContextFlyout>-->
+                            </Border.ContextFlyout>
                             <Grid>
                                 <!--Image-->
                                 <Image Stretch="UniformToFill" Source="{Binding ThumbImageSource, Mode=TwoWay}"/>

@@ -158,7 +158,7 @@
                             </GridView.ItemsPanel>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <HyperlinkButton>
+                                    <HyperlinkButton Click="HyperlinkButton_Click" Command="{Binding ElementName=self, Path=ViewModel.TagQueryCommand}" CommandParameter="{Binding}" ToolTipService.ToolTip="{Binding}">
                                         <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
                                     </HyperlinkButton>
                                 </DataTemplate>

@@ -23,5 +23,10 @@ namespace ExHentaiDownloader3.Views
             }
             DispatcherQueue.TryEnqueue(() => _ = termsOfUseContentDialog.ShowAsync());
         }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            termsOfUseContentDialog.Hide();
+        }
     }
 }

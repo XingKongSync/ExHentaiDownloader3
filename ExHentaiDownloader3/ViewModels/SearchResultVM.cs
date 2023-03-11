@@ -75,6 +75,7 @@ namespace ExHentaiDownloader3.ViewModels
         public RelayCommand<BookInfoVM> OpenBookCommand { get; private set; }
         public RelayCommand<BookInfoVM> OpenBookInBackgroundCommand { get; private set; }
         public RelayCommand<BookInfoVM> DownloadCommand { get; private set; }
+        public RelayCommand<string> TagQueryCommand { get; private set; }
         public RelayCommand FirstCommand { get; private set; }
         public RelayCommand LastComand { get; private set; }
         public RelayCommand PreCommand { get; private set; }
@@ -92,12 +93,20 @@ namespace ExHentaiDownloader3.ViewModels
             OpenBookCommand = new RelayCommand<BookInfoVM>(OpenBookCommandHandler);
             OpenBookInBackgroundCommand = new RelayCommand<BookInfoVM>(OpenBookInBackgroundCommandHandler);
             DownloadCommand = new RelayCommand<BookInfoVM>(DownloadCommandHandler);
+            TagQueryCommand = new RelayCommand<string>(TagQueryCommandHandler);
             FirstCommand = new RelayCommand(FirstCommandHandler, ()=> !string.IsNullOrWhiteSpace(FirstUrl));
             LastComand = new RelayCommand(LastComandHandler, ()=> !string.IsNullOrWhiteSpace(LastUrl));
             PreCommand = new RelayCommand(PreCommandHandler, ()=> !string.IsNullOrWhiteSpace(PreUrl));
             NextCommand = new RelayCommand(NextCommandHandler, ()=> !string.IsNullOrWhiteSpace(NextUrl));
 
             DispatcherQueue.GetForCurrentThread().TryEnqueue(Load);
+        }
+
+        private void TagQueryCommandHandler(string tag)
+        {
+            var tab = TabFactory.CreateSearchResultTab(tag);
+            MainWindow.Instance.VM.NewTab(tab);
+            HistoryManager.Instance.AddItem(tag);
         }
 
         private void DownloadCommandHandler(BookInfoVM obj)

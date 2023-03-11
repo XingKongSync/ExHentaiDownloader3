@@ -80,7 +80,7 @@ namespace ExHentaiDownloader3.Core
 
         private async Task<string> InnerDownloadBigImage(string bookName, string url, int index)
         {
-            bookName = FileNameHelper.CleanDirectoryName(bookName);
+            bookName = FileNameHelper.CleanFileName(bookName);
             string ext = Path.GetExtension(new Uri(url).LocalPath);
             string filename = $"{index}{ext}";
             string dir = Path.Combine(CONST_THUMB_BOOK_PATH, bookName);

@@ -186,6 +186,9 @@
   <data name="OpenInBackground" xml:space="preserve">
     <value>Open In Background</value>
   </data>
+  <data name="OpenInExplorer" xml:space="preserve">
+    <value>Open In Explorer</value>
+  </data>
   <data name="PrePage" xml:space="preserve">
     <value>&lt; Pre</value>
   </data>

@@ -1,9 +1,11 @@
-﻿using ExHentaiDownloader3.Helpers;
+﻿using CommunityToolkit.Mvvm.Input;
+using ExHentaiDownloader3.Helpers;
 using ExHentaiDownloader3.ViewModels;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -93,6 +95,8 @@ namespace ExHentaiDownloader3.Core
         public string Title { get; set; }
         public string ThumbPath { get; set; }
 
+        public RelayCommand OpenInExplorerCommand { get; private set; }
+
         public List<LibraryItemImage> Images
         {
             get
@@ -133,6 +137,17 @@ namespace ExHentaiDownloader3.Core
 
             var dirInfo = new DirectoryInfo(folderFullPath);
             ThumbPath = dirInfo.GetFiles("Folder.*")?.FirstOrDefault()?.FullName;
+
+            OpenInExplorerCommand = new RelayCommand(OpenInExplorerCommandHandler);
+        }
+
+        private void OpenInExplorerCommandHandler()
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "explorer.exe",
+                Arguments = _folderFullPath
+            });
         }
 
         private List<LibraryItemImage> LoadImages()
