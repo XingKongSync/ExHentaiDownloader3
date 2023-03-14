@@ -2,7 +2,7 @@
 
 # ExHentaiDownloader 3
 
-一个可以搜索、浏览和下载 ExHentai 图库的客户端
+一个可以搜索、浏览和下载 ExHentai 图库的客户端，建议在 Windows 11 上运行
 
 <img src=".\Images\image-20230314111150509.png" alt="image-20230314111150509" style="width:900px;" />
 
