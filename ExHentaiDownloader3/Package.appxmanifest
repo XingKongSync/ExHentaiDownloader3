@@ -9,7 +9,7 @@
   <Identity
     Name="f800f993-4013-42ee-8efc-6163d54187ae"
     Publisher="CN=XingKongSoft"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <Properties>
     <DisplayName>ExHentaiDownloader3</DisplayName>

@@ -33,7 +33,7 @@
             <StackPanel Margin="30 0 0 0">
                 <!--Cookies-->
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Cookies" Margin="0 10 0 0"/>
-                <TextBox Text="{Binding Cookies, Mode=TwoWay}" AcceptsReturn="True" Height="200" Width="500" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+                <TextBox Text="{Binding Cookies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="200" Width="500" HorizontalAlignment="Left" Margin="0 10 0 0"/>
                 <!--Sound-->
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Sound}" Margin="0 30 0 0"/>
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
@@ -49,7 +49,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=LibraryPath}" VerticalAlignment="Center" Margin="0 0 10 0"/>
-                    <TextBox Text="{Binding LibraryFolder, Mode=TwoWay}" Grid.Column="1" Margin="0 0 10 0"/>
+                    <TextBox Text="{Binding LibraryFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="0 0 10 0"/>
                     <Button Grid.Column="2" Content="{x:Bind Converter={StaticResource LanguageConverter}, ConverterParameter=Browse}" Command="{x:Bind ViewModel.ChooseDownloadFolderCommand}"/>
                 </Grid>
                 <!--Mosaic-->
