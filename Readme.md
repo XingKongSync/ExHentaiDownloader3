@@ -4,6 +4,8 @@
 
 一个可以搜索、浏览和下载 ExHentai 图库的客户端
 
+<img src=".\Images\image-20230314111150509.png" alt="image-20230314111150509" style="width:900px;" />
+
 
 ## 一、概述 / Introduction
 
