@@ -1,8 +1,9 @@
-<img src=".\Images\Logo.png" style="zoom:40%;" />
+<div align=center><img src=".\Images\Logo.png" style="height:300px; width:300px" /></div>
 
 # ExHentaiDownloader 3
 
 一个可以搜索、浏览和下载 ExHentai 图库的客户端
+
 
 ## 一、概述 / Introduction
 
@@ -18,6 +19,7 @@
 - 交互时有音效
 - 支持图片模糊（防社死）
 
+
 ## 二、用法 / Usage
 
 首次使用时，需要切换到设置界面，将 E 站的 Cookies 导出并粘贴到 Cookies 一栏中，然后点击保存按钮。
@@ -29,6 +31,7 @@
 在图库界面中，可以看到下载下来的图片，目前图库中的内容还未做自动刷新，您可能需要手动点击刷新按钮。
 
 > 注意：<br>如果在短下载大量图片可能会触发 E 站的保护机制
+
 
 ## 三、安装步骤 / Install
 
@@ -46,4 +49,3 @@
 12. 点击`安装`
 13. 等待安装完成
 14. 启动`ExHentaiDownloader3`
-
