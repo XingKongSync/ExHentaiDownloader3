@@ -123,6 +123,9 @@
   <data name="Cache" xml:space="preserve">
     <value>缓存</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
   <data name="Canceled" xml:space="preserve">
     <value>已取消</value>
   </data>
@@ -197,6 +200,9 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
   </data>
   <data name="SaveChangesHint" xml:space="preserve">
     <value>您是否要保存更改？</value>

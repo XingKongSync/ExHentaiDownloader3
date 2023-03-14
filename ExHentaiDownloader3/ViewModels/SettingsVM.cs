@@ -72,9 +72,11 @@ namespace ExHentaiDownloader3.ViewModels
 
         private void Discard()
         {
+            var temp = _propertyCache.Keys.ToList();
             _propertyCache.Clear();
 
             HasModified = false;
+            temp.ForEach(property => RaisePropertyChanged(property));
         }
 
         private void Submit()
